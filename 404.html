@@ -3,23 +3,12 @@ permalink: /404.html
 layout: page
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
 
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+<div class="container my-5 min-h-100vh d-flex justify-content-center align-items-center error-404-page">
+  <div class="error-container">
+    <h1 class="error-code">404</h1>
+    <p class="error-message"><strong>Oops! Page Not Found</strong></p>
+    <p class="error-subtext">The page you’re looking for doesn’t exist or has been moved.</p>
+    <a href="{{ '/' | relative_url }}" class="neon-btn">⬅ Back to Home</a>
+  </div>
 </div>

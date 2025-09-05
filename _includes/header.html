@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold neon-text" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link neon-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link neon-link {% if page.url contains '/about' %}active{% endif %}"
+                        href="{{ '/about' | relative_url }}"
+                    >
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link neon-link {% if page.url contains '/projects' %}active{% endif %}"
+                        href="{{ '/projects' | relative_url }}"
+                    >
+                        Projects
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link neon-link {% if page.url contains '/contact' %}active{% endif %}"
+                        href="{{ '/contact' | relative_url }}"
+                    >
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
