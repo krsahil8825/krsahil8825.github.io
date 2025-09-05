@@ -1,3 +1,25 @@
+html {
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    scrollbar-color: #00f5ff #0d0d0d;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: #0d0d0d;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #00f5ff;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #0d0d0d;
+    }
+}
+
+
 body {
     background-color: #0d0d0d;
     font-family: "Poppins", sans-serif;
@@ -13,7 +35,7 @@ body {
 /* Navigation Styles starts ------------------------------------------------------------------------------- */
 nav .neon-text {
     color: #00fff7;
-    text-shadow: 0 0 5px #00fff7, 0 0 10px #00e5ff, 0 0 20px #00cfff;
+    text-shadow: 0 0 5px #00fff7a1, 0 0 10px #00e5ffa1, 0 0 20px #00cfffa1;
 }
 
 nav .neon-link {
@@ -23,12 +45,12 @@ nav .neon-link {
 
 nav .neon-link:hover {
     color: #00fff7 !important;
-    text-shadow: 0 0 5px #00fff7, 0 0 10px #00e5ff, 0 0 20px #00cfff;
+    text-shadow: 0 0 5px #00fff7a1, 0 0 10px #00e5ffa1, 0 0 20px #00cfffa1;
 }
 
 nav .neon-link.active {
     color: #00fff7 !important;
-    text-shadow: 0 0 5px #00fff7, 0 0 10px #00e5ff, 0 0 20px #00cfff;
+    text-shadow: 0 0 5px #00fff7a1, 0 0 10px #00e5ffa1, 0 0 20px #00cfffa1;
 }
 
 /* Navigation Styles ends ------------------------------------------------------------------------------- */
@@ -40,13 +62,13 @@ nav .neon-link.active {
 }
 
 footer .neon-footer {
-    border-top: 2px solid #00fff7;
-    box-shadow: 0 0 12px #00fff7;
+    border-top: 2px solid #00fff7a1;
+    box-shadow: 0 0 12px #00fff7a1;
 }
 
 footer .neon-text {
     color: #00fff7;
-    text-shadow: 0 0 6px #00fff7, 0 0 12px #00e5ff, 0 0 24px #00cfff;
+    text-shadow: 0 0 6px #00fff7a1, 0 0 12px #00e5ffa1, 0 0 24px #00cfffa1;
 }
 
 footer .neon-subtitle {
@@ -65,7 +87,7 @@ footer .neon-link {
 footer .neon-link:hover,
 footer .neon-link.active {
     color: #00fff7;
-    text-shadow: 0 0 6px #00fff7, 0 0 12px #00e5ff, 0 0 24px #00cfff;
+    text-shadow: 0 0 6px #00fff7a1, 0 0 12px #00e5ffa1, 0 0 24px #00cfffa1;
 }
 
 footer .neon-icon {
@@ -75,13 +97,13 @@ footer .neon-icon {
 
 footer .neon-icon:hover {
     color: #00fff7;
-    text-shadow: 0 0 6px #00fff7, 0 0 15px #00e5ff, 0 0 30px #00cfff;
+    text-shadow: 0 0 6px #00fff7a1, 0 0 15px #00e5ffa1, 0 0 30px #00cfffa1;
     transform: scale(1.2);
 }
 
 footer .neon-divider {
-    border-top: 1px solid #00fff7;
-    box-shadow: 0 0 6px #00fff7;
+    border-top: 1px solid #00fff7a1;
+    box-shadow: 0 0 6px #00fff7a1;
 }
 
 /* Footer Styles ends ------------------------------------------------------------------------------- */
@@ -97,7 +119,7 @@ footer .neon-divider {
     font-size: 8rem;
     font-weight: bold;
     color: #00fff7;
-    text-shadow: 0 0 8px #00fff7, 0 0 16px #00e5ff, 0 0 32px #00cfff;
+    text-shadow: 0 0 8px #00fff7a1, 0 0 16px #00e5ffa1, 0 0 32px #00cfffa1;
 }
 
 .error-404-page .error-message {
@@ -114,7 +136,7 @@ footer .neon-divider {
 
 .error-404-page .neon-btn {
     color: #00fff7;
-    border: 2px solid #00fff7;
+    border: 2px solid #00fff7a1;
     padding: 10px 24px;
     border-radius: 30px;
     background: transparent;
@@ -127,7 +149,7 @@ footer .neon-divider {
 .error-404-page .neon-btn:hover {
     background: #00fff7;
     color: #0d0d0d;
-    box-shadow: 0 0 12px #00fff7, 0 0 24px #00e5ff, 0 0 48px #00cfff;
+    box-shadow: 0 0 12px #00fff7a1, 0 0 24px #00e5ffa1, 0 0 48px #00cfffa1;
     transform: scale(1.05);
 }
 
@@ -144,7 +166,7 @@ footer .neon-divider {
 .about-page .about-section h1,
 .about-page .about-section h3 {
     color: #00f5ff;
-    text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+    text-shadow: 0 0 10px #00f5ffa1, 0 0 20px #00f5ffa1;
 }
 
 .about-page .about-section p {
@@ -154,8 +176,8 @@ footer .neon-divider {
 }
 
 .about-page .about-section img {
-    border: 4px solid #00f5ff;
-    box-shadow: 0 0 20px #00f5ff;
+    border: 4px solid #00f5ffa1;
+    box-shadow: 0 0 20px #00f5ffa1;
     transition: transform 0.3s ease;
 }
 
@@ -165,7 +187,101 @@ footer .neon-divider {
 
 .about-page .text-primary {
     color: #ff00ff !important;
-    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+    text-shadow: 0 0 10px #ff00ffa1, 0 0 20px #ff00ffa1;
 }
 
 /* About Page Styles ends ------------------------------------------------------------------------------- */
+
+/* Home Page Styles Starts ------------------------------------------------------------------------------- */
+
+.home-page section {
+    padding: 80px 20px;
+}
+
+.home-page .section-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #00f5ff;
+    text-shadow: 0 0 12px #00f5ffa1;
+}
+
+/* Hero Section */
+.home-page .hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.home-page .hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00f5ff;
+    text-shadow: 0 0 10px #00f7ff51, 0 0 25px #00f5ff51;
+    animation: glowPulse 2s infinite alternate;
+}
+
+.home-page .hero-subtitle {
+    font-size: 1.3rem;
+    margin-top: 15px;
+    color: #cfcfcf;
+    animation: fadeInUp 2s ease;
+}
+
+.home-page .btn-neon {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #ff00ffa1;
+    border-radius: 30px;
+    text-decoration: none;
+    text-shadow: 0 0 10px #ff00ffa1;
+    box-shadow: 0 0 10px #ff00ffa1, 0 0 20px #ff00ffa1 inset;
+    transition: all 0.3s ease;
+}
+
+.home-page .btn-neon:hover {
+    background: #ff00ff;
+    color: #0d0d0d;
+    box-shadow: 0 0 20px #ff00ffa1, 0 0 40px #ff00ffa1;
+}
+
+@keyframes glowPulse {
+    from {
+        text-shadow: 0 0 10px #00f5ff51;
+    }
+
+    to {
+        text-shadow: 0 0 30px #00f5ff51, 0 0 50px #00f5ff51;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About Preview */
+.home-page .about-preview {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #cfcfcf;
+}
+
+/* Home Page Styles ends ------------------------------------------------------------------------------- */
