@@ -15,6 +15,8 @@ export const SITE = {
     // Site Icon
     siteIcons: {
         png: "/site/favicon.png",
+        ico: "/site/favicon.ico",
+        svg: "/site/favicon.svg",
     },
 
     // Professional Info

@@ -14,54 +14,55 @@ const {
 ---
 
 <head>
-  <html lang="en" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>{name} | Portfolio website</title>
+    <title>{name} | Portfolio website</title>
 
-  <meta name="description" content={description || "Kumar Sahil - Backend Developer specializing in Python, Java, Django, and Flask."} />
-  <meta name="keywords" content={keywords.join(", ")} />
-  <meta name="author" content={name} />
-  <link rel="canonical" href={url} />
-  <link rel="icon" href={SITE.siteIcons.png} type="image/x-icon" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="author" content={name} />
+    <link rel="canonical" href={url} />
+    <link rel="icon" href={SITE.siteIcons.ico} sizes="any" type="image/x-icon" />
+    <link rel="icon" href={SITE.siteIcons.svg} type="image/svg+xml" />
+    <link rel="icon" href={SITE.siteIcons.png} type="image/png" />
 
-  <!-- Theme -->
-  <meta name="theme-color" content={themeColor} />
+    <!-- Theme -->
+    <meta name="theme-color" content={themeColor} />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={name} />
-  <meta property="og:description" content={description} />
-  <meta property="og:url" content={url} />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:creator" content="@krsahil8825" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@krsahil8825" />
 
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-    {JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": `${url}#person`,
-      name: name,
-      alternateName: SITE.aliases,
-      url: url,
-      image: `${url}${SITE.profilePic}`,
-      sameAs: Object.values(social),
-      jobTitle: "Backend Developer",
-      knowsAbout: [
-        "Python",
-        "Java",
-        "Django",
-        "Flask",
-        "SQL",
-        "Backend Development",
-        "Data Structures"
-      ]
-    })}
-  </script>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+        {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "@id": `${url}#person`,
+            name: name,
+            alternateName: SITE.aliases,
+            url: url,
+            image: `${url}${SITE.profilePic}`,
+            sameAs: Object.values(social),
+            jobTitle: "Backend Developer",
+            knowsAbout: [
+                "Python",
+                "Java",
+                "Django",
+                "Flask",
+                "SQL",
+                "Backend Development",
+                "Data Structures"
+            ]
+        })}
+    </script>
 
 </head>
