@@ -1,43 +1,94 @@
-# Astro Starter Kit: Minimal
+# 🌐 Kumar Sahil - Portfolio Website
 
-```sh
-npm create astro@latest -- --template minimal
+Welcome to my personal portfolio website! This project showcases my journey as a backend developer, highlighting my skills, projects, and professional experience in web development.
+
+## 🚀 About
+
+This is my portfolio website built with [Astro](https://astro.build/), a modern static site generator that delivers exceptional performance and developer experience. The site features a clean, responsive design that effectively presents my work as a Python and Java developer specializing in backend development.
+
+Visit the live site: **[krsahil.co.in](https://krsahil.co.in)**
+
+## 👨‍💻 About Me
+
+I'm Kumar Sahil, a passionate backend developer and BCA student with expertise in Java, Python, and modern web technologies. I focus on building scalable, production-ready applications using frameworks like Django and Flask, combined with strong database management skills using SQL. My development workflow incorporates industry-standard tools including Git for version control and Docker for containerization.
+
+I'm continuously strengthening my foundation in data structures, algorithms, and core computer science principles to write more efficient and maintainable code. I believe in learning through hands-on experience, contributing to open source projects, and staying updated with the latest technology trends.
+
+## ✨ Features
+
+-   **Responsive Design**: Fully optimized for all devices and screen sizes
+-   **Modern Tech Stack**: Built with Astro and Tailwind CSS for optimal performance
+-   **Fast Loading**: Static site generation ensures lightning-fast page loads
+-   **SEO Optimized**: Configured for better search engine visibility
+-   **GitHub Pages Deployment**: Automated deployment pipeline using GitHub Actions
+
+## 🛠️ Technologies Used
+
+-   **Framework**: [Astro](https://astro.build/) v5.16.6
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4.1.18
+-   **Language**: TypeScript
+-   **Deployment**: GitHub Pages
+-   **CI/CD**: GitHub Actions
+
+## 📦 Installation & Setup
+
+To run this project locally, follow these steps:
+
+```bash
+# Clone the repository
+git clone https://github.com/krsahil8825/krsahil8825.github.io.git
+
+# Navigate to the project directory
+cd krsahil8825.github.io
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The site will be available at `http://localhost:4321`
 
-## 🚀 Project Structure
+## 🔨 Available Scripts
 
-Inside of your Astro project, you'll see the following folders and files:
+-   `npm run dev` - Start the development server
+-   `npm run build` - Build the project for production
+-   `npm run preview` - Preview the production build locally
 
-```text
-/
-├── public/
+## 📁 Project Structure
+
+```
+├── public/          # Static assets (images, icons, etc.)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/  # Reusable Astro components
+│   ├── config/      # Site configuration
+│   ├── layouts/     # Page layouts
+│   ├── pages/       # Site pages
+│   └── styles/      # Global styles
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🌟 Sections
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+-   **Hero**: Introduction and professional headline
+-   **About**: Background and professional summary
+-   **Skills**: Technical skills and expertise
+-   **Projects**: Portfolio of completed projects
+-   **Contact**: Ways to get in touch
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 📝 License
 
-## 🧞 Commands
+This project is open source and available for personal and educational purposes.
 
-All commands are run from the root of the project, from a terminal:
+## 📫 Connect With Me
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+-   **Website**: [krsahil.co.in](https://krsahil.co.in)
+-   **GitHub**: [@krsahil8825](https://github.com/krsahil8825)
+-   **LinkedIn**: [@krsahil8825](https://www.linkedin.com/in/krsahil8825/)
+-   **Twitter**: [@krsahil8825](https://twitter.com/krsahil8825)
+-   **Email**: [contact@krsahil.co.in](mailto:contact@krsahil.co.in)
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+⭐ If you find this project helpful, consider giving it a star on GitHub!
