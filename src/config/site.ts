@@ -18,7 +18,7 @@ export const SITE = {
     },
 
     // Professional Info
-    role: "Backend Developer | Python & Java",
+    role: "Python Developer | Java Developer | Django Developer",
     tagline: "Building reliable backend systems with Django, Flask, and SQL",
 
     shortBio:
