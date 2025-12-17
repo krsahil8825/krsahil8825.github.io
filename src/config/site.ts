@@ -64,6 +64,7 @@ export const SITE = {
         github: "https://github.com/krsahil8825",
         linkedin: "https://linkedin.com/in/krsahil8825",
         twitter: "https://twitter.com/krsahil8825",
-        instagram: "https://instagram.com/krsahil8825"
+        instagram: "https://instagram.com/krsahil8825",
+        mail: "mailto:contact@krsahil.co.in",
     }
 } as const;
