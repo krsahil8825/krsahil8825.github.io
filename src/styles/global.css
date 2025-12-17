@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+    --neon: #00f0ff;
+    --bg: #020617;
+}
+
+body {
+    background-color: var(--bg);
+    color: #e5e7eb;
+}
+
+.neon-text {
+    color: var(--neon);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
+.neon-border {
+    border: 1px solid var(--neon);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+}
+
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon) var(--bg);
+}
