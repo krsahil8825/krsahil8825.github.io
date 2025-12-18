@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://krsahil.co.in/sitemap.xml
+Sitemap: https://krsahil.co.in/sitemap-index.xml
