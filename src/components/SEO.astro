@@ -1,68 +1,112 @@
 ---
-
 import { SITE } from "../config/site";
 
 const {
-  name,
-  description,
-  keywords,
-  url,
-  themeColor,
-  social
+    name,
+    fullName,
+    description,
+    keywords,
+    url,
+    themeColor,
+    social,
+    locale
 } = SITE;
-
 ---
 
 <head>
+    <!-- BASIC META -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{name} | Portfolio website</title>
+    <title>
+        {fullName} - Backend Developer (Python, Java, Django)
+    </title>
 
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords.join(", ")} />
-    <meta name="author" content={name} />
+
+    <meta name="author" content={fullName} />
     <link rel="canonical" href={url} />
-    <link rel="icon" href={SITE.siteIcons.ico} sizes="any" type="image/x-icon" />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="language" content={locale} />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- ICONS -->
+    <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
     <link rel="icon" href={SITE.siteIcons.svg} type="image/svg+xml" />
     <link rel="icon" href={SITE.siteIcons.png} type="image/png" />
 
-    <!-- Theme -->
+    <!-- THEME -->
     <meta name="theme-color" content={themeColor} />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={name} />
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={`${fullName} - Backend Developer`} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
+    <meta property="og:site_name" content={fullName} />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:image" content={`${url}${SITE.profilePic}`} />
 
-    <!-- Twitter -->
+    <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${fullName} - Backend Developer`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${url}${SITE.profilePic}`} />
     <meta name="twitter:creator" content="@krsahil8825" />
 
-
-    <!-- Structured Data -->
+    <!-- STRUCTURED DATA (ENTITY SEO) -->
     <script type="application/ld+json">
         {JSON.stringify({
-            "@context": "https://schema.org",
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+            "@type": "WebSite",
+            "@id": `${url}#website`,
+            "url": url,
+            "name": "Kumar Sahil - Backend Developer",
+            "publisher": {
+                "@id": `${url}#person`
+            }
+            },
+            {
             "@type": "Person",
             "@id": `${url}#person`,
-            name: name,
-            alternateName: SITE.aliases,
-            url: url,
-            image: `${url}${SITE.profilePic}`,
-            sameAs: Object.values(social),
-            jobTitle: "Backend Developer",
-            knowsAbout: [
+            "name": "Kumar Sahil",
+            "alternateName": [
+                "Sahil",
+                "Sahil Kumar",
+                "Kumar Sahil",
+                "Kr Sahil",
+                "KrSahil",
+                "krsahil8825",
+                "Kumar Sahil Developer",
+                "Sahil Developer"
+            ],
+            "url": url,
+            "image": `${url}${SITE.profilePic}`,
+            "jobTitle": "Backend Developer",
+            "description": description,
+            "knowsAbout": [
                 "Python",
                 "Java",
                 "Django",
                 "Flask",
                 "SQL",
                 "Backend Development",
-                "Data Structures"
+                "REST APIs",
+                "Data Structures",
+                "Algorithms",
+                "Web Development"
+            ],
+            "sameAs": [
+                social.github,
+                social.linkedin,
+                social.twitter,
+                social.instagram
             ]
+            }
+        ]
         })}
     </script>
-
 </head>
