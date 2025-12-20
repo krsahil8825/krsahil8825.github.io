@@ -1,16 +1,5 @@
 ---
 import { SITE } from "../config/site";
-
-const {
-    name,
-    fullName,
-    description,
-    keywords,
-    url,
-    themeColor,
-    social,
-    locale
-} = SITE;
 ---
 
 <head>
@@ -19,15 +8,15 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>
-        {fullName} - Backend Developer (Python, Java, Django)
+        {SITE.fullName} - Backend Developer (Python, Java, Django)
     </title>
 
-    <meta name="description" content={description} />
+    <meta name="description" content={SITE.description} />
 
-    <meta name="author" content={fullName} />
-    <link rel="canonical" href={url} />
-    <meta name="keywords" content={keywords.join(", ")} />
-    <meta name="language" content={locale} />
+    <meta name="author" content={SITE.fullName} />
+    <link rel="canonical" href={SITE.url} />
+    <meta name="keywords" content={SITE.keywords.join(", ")} />
+    <meta name="language" content={SITE.locale} />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
 
@@ -41,22 +30,22 @@ const {
     <link rel="android-chrome-icon" href={SITE.siteIcons.androidChromeIcon} />
 
     <!-- THEME -->
-    <meta name="theme-color" content={themeColor} />
+    <meta name="theme-color" content={SITE.themeColor} />
 
     <!-- OPEN GRAPH -->
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content={`${fullName} - Backend Developer`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={url} />
-    <meta property="og:site_name" content={fullName} />
-    <meta property="og:locale" content={locale} />
-    <meta property="og:image" content={`${url}${SITE.profilePic}`} />
+    <meta property="og:title" content={`${SITE.fullName} - Backend Developer`} />
+    <meta property="og:description" content={SITE.description} />
+    <meta property="og:url" content={SITE.url} />
+    <meta property="og:site_name" content={SITE.fullName} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:image" content={`${SITE.url}${SITE.profilePic}`} />
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${fullName} - Backend Developer`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${url}${SITE.profilePic}`} />
+    <meta name="twitter:title" content={`${SITE.fullName} - Backend Developer`} />
+    <meta name="twitter:description" content={SITE.description} />
+    <meta name="twitter:image" content={`${SITE.url}${SITE.profilePic}`} />
     <meta name="twitter:creator" content="@krsahil8825" />
 
     <!-- STRUCTURED DATA (ENTITY SEO) -->
@@ -66,16 +55,16 @@ const {
         "@graph": [
             {
             "@type": "WebSite",
-            "@id": `${url}#website`,
-            "url": url,
+            "@id": `${SITE.url}#website`,
+            "url": SITE.url,
             "name": "Kumar Sahil - Backend Developer",
             "publisher": {
-                "@id": `${url}#person`
+                "@id": `${SITE.url}#person`
             }
             },
             {
             "@type": "Person",
-            "@id": `${url}#person`,
+            "@id": `${SITE.url}#person`,
             "name": "Kumar Sahil",
             "alternateName": [
                 "Sahil",
@@ -87,10 +76,10 @@ const {
                 "Kumar Sahil Developer",
                 "Sahil Developer"
             ],
-            "url": url,
-            "image": `${url}${SITE.profilePic}`,
+            "url": SITE.url,
+            "image": `${SITE.url}${SITE.profilePic}`,
             "jobTitle": "Backend Developer",
-            "description": description,
+            "description": SITE.description,
             "knowsAbout": [
                 "Python",
                 "Java",
@@ -104,10 +93,10 @@ const {
                 "Web Development"
             ],
             "sameAs": [
-                social.github,
-                social.linkedin,
-                social.twitter,
-                social.instagram
+                SITE.social.github.url,
+                SITE.social.linkedin.url,
+                SITE.social.twitter.url,
+                SITE.social.instagram.url
             ]
             }
         ]

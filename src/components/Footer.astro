@@ -52,10 +52,10 @@ import { SITE } from "../config/site";
 
             <!-- social links -->
             <div class="flex flex-wrap justify-center md:justify-end gap-6">
-                <a href={SITE.social.github} class="hover:text-cyan-400 transition">GitHub</a>
-                <a href={SITE.social.linkedin} class="hover:text-cyan-400 transition">LinkedIn</a>
-                <a href={SITE.social.twitter} class="hover:text-cyan-400 transition">Twitter</a>
-                <a href={SITE.social.instagram} class="hover:text-cyan-400 transition">Instagram</a>
+                <a href={SITE.social.github.url} class="hover:text-cyan-400 transition">GitHub</a>
+                <a href={SITE.social.linkedin.url} class="hover:text-cyan-400 transition">LinkedIn</a>
+                <a href={SITE.social.twitter.url} class="hover:text-cyan-400 transition">Twitter</a>
+                <a href={SITE.social.instagram.url} class="hover:text-cyan-400 transition">Instagram</a>
             </div>
 
             <!-- divider -->
@@ -63,14 +63,14 @@ import { SITE } from "../config/site";
 
             <!-- email -->
             <a
-                href={SITE.social.mail}
+                href={SITE.social.mail.url}
                 class="inline-block
                 text-xs
                 text-white/50
                 hover:text-cyan-400
                 transition"
             >
-                contact@krsahil.co.in
+                {SITE.social.mail.email}
             </a>
         </div>
     </div>
