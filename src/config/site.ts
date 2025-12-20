@@ -17,6 +17,10 @@ export const SITE = {
         png: "/site/favicon.png",
         ico: "/site/favicon.ico",
         svg: "/site/favicon.svg",
+        png32x32: "/site/favicon-32x32.png",
+        png16x16: "/site/favicon-16x16.png",
+        appleTouchIcon: "/site/favicon-180x180.png",
+        androidChromeIcon: "/site/favicon-192x192.png",
     },
 
     // Professional Info
