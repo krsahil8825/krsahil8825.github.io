@@ -1,5 +1,176 @@
 ---
 import { SITE } from "../config/site";
+
+/// TYPE DEFINITIONS
+
+// Define the props types for SEO component
+// these three interfaces help in type checking the props passed to the component
+// and ensure that only the correct combination of props is used
+interface IndexableOnly {
+    isIndexable?: boolean;
+}
+
+interface FullSEOProps extends IndexableOnly {
+    pageType: "article" | "website";
+    pTitle: string;
+    pDescription: string;
+    pPath: string;
+    pKeywords: string[];
+    pImagePath: string;
+    pTags: string[];
+    pSlug: string;
+    pPublishedTime: string;
+    pModifiedTime: string;
+}
+
+interface IndexOnlyProps extends IndexableOnly {
+    pageType?: never;
+    pTitle?: never;
+    pDescription?: never;
+    pPath?: never;
+    pKeywords?: never;
+    pImagePath?: never;
+    pTags?: never;
+    pSlug?: never;
+    pPublishedTime?: never;
+    pModifiedTime?: never;
+}
+
+type SEOProps = FullSEOProps | IndexOnlyProps;
+
+
+/// PROP EXTRACTION AND DEFAULTS
+
+// Destructure the props with default values
+const props = Astro.props as SEOProps;
+
+// Type guard to check if full SEO props are provided
+const isFullSEO = "pTitle" in props;
+
+
+///  SAFE EXTRACTION OF PROPS
+
+// isIndexable is optional for both types of props
+const isIndexable = props.isIndexable ?? true;
+
+// If full SEO props are provided, extract them; otherwise, set defaults
+const pageType = isFullSEO ? props.pageType : "website";
+const pTitle = isFullSEO ? props.pTitle : "";
+const pDescription = isFullSEO ? props.pDescription : "";
+const pPath = isFullSEO ? props.pPath : "";
+const pKeywords = isFullSEO ? props.pKeywords : [];
+const pImagePath = isFullSEO ? props.pImagePath : "";
+const pTags = isFullSEO ? props.pTags : [];
+const pSlug = isFullSEO ? props.pSlug : "";
+const pPublishedTime = isFullSEO ? props.pPublishedTime : "";
+const pModifiedTime = isFullSEO ? props.pModifiedTime : "";
+
+
+/// META TAG VALUES COMPUTATION
+
+// this check is to ensure that only "article" or "website" is used as type
+// here article type is used for blog posts or articles or projects pages
+const metaType = pageType === "article" ? pageType : "website"; // default to "website" if not "article"
+
+const isArticle = metaType === "article" ? true : false;
+
+const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` 
+    : `${SITE.fullName} | ${SITE.role}`;
+
+const metaDescription = pDescription ? pDescription : SITE.description;
+
+const metaURL = pPath ? `${SITE.url}${pPath}` : SITE.url;
+
+const metaKeywords = [...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])].join(", ");
+
+const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
+
+const indexable = isIndexable !== undefined ? isIndexable : true;
+
+
+/// STRUCTURED DATA GENERATION
+
+// Structured Data - JSON-LD for Entity SEO
+const baseGraph = [
+    {
+        "@type": "WebSite",
+        "@id": `${SITE.url}#website`,
+        "url": SITE.url,
+        "name": SITE.fullName,
+        "publisher": {
+            "@id": `${SITE.url}#person`
+        }
+    },
+    {
+        "@type": "Person",
+        "@id": `${SITE.url}#person`,
+        "name": "Kumar Sahil",
+        "alternateName": [
+            "Sahil",
+            "Sahil Kumar",
+            "Kumar Sahil",
+            "Kr Sahil",
+            "KrSahil",
+            "krsahil8825",
+            "Kumar Sahil Developer",
+            "Sahil Developer"
+        ],
+        "url": SITE.url,
+        "image": `${SITE.url}${SITE.profilePic}`,
+        "jobTitle": SITE.role,
+        "description": SITE.description,
+        "knowsAbout": [
+            "Python",
+            "Java",
+            "Django",
+            "Flask",
+            "SQL",
+            "Backend Development",
+            "REST APIs",
+            "Data Structures",
+            "Algorithms",
+            "Web Development"
+        ],
+        "sameAs": [
+            SITE.social.github.url,
+            SITE.social.linkedin.url,
+            SITE.social.twitter.url,
+            SITE.social.instagram.url
+        ]
+    }
+];
+
+
+// BlogPosting structured data for articles
+const blogPosting =
+    isArticle && pSlug && pPublishedTime
+        ? {
+            "@type": "BlogPosting",
+            "@id": `${metaURL}#blogposting`,
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": metaURL
+            },
+            "headline": metaTitle,
+            "description": metaDescription,
+            "image": metaImage,
+            "datePublished": pPublishedTime,
+            "dateModified": pModifiedTime || pPublishedTime,
+            "author": {
+                "@id": `${SITE.url}#person`
+            },
+            "publisher": {
+                "@id": `${SITE.url}#website`
+            }
+        }
+        : null;
+
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": blogPosting
+        ? [...baseGraph, blogPosting]
+        : baseGraph
+};
 ---
 
 <head>
@@ -8,17 +179,29 @@ import { SITE } from "../config/site";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>
-        {SITE.fullName} - Backend Developer (Python, Java, Django)
+        {metaTitle}
     </title>
 
-    <meta name="description" content={SITE.description} />
+    <meta name="description" content={metaDescription} />
 
     <meta name="author" content={SITE.fullName} />
-    <link rel="canonical" href={SITE.url} />
-    <meta name="keywords" content={SITE.keywords.join(", ")} />
+    <link rel="canonical" href={metaURL} />
+    <meta name="keywords" content={metaKeywords} />
     <meta name="language" content={SITE.locale} />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+
+    <!-- INDEXING -->
+    {indexable ? (
+        <>
+            <meta name="robots" content="index, follow" />
+            <meta name="googlebot" content="index, follow" />
+        </>
+    ) : (
+        <>
+            <meta name="robots" content="noindex, nofollow" />
+            <meta name="googlebot" content="noindex, nofollow" />
+        </>
+    )}
+    
 
     <!-- ICONS -->
     <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
@@ -33,73 +216,23 @@ import { SITE } from "../config/site";
     <meta name="theme-color" content={SITE.themeColor} />
 
     <!-- OPEN GRAPH -->
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content={`${SITE.fullName} - Backend Developer`} />
-    <meta property="og:description" content={SITE.description} />
-    <meta property="og:url" content={SITE.url} />
+    <meta property="og:type" content={metaType} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={metaURL} />
     <meta property="og:site_name" content={SITE.fullName} />
     <meta property="og:locale" content={SITE.locale} />
-    <meta property="og:image" content={`${SITE.url}${SITE.profilePic}`} />
+    <meta property="og:image" content={metaImage} />
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${SITE.fullName} - Backend Developer`} />
-    <meta name="twitter:description" content={SITE.description} />
-    <meta name="twitter:image" content={`${SITE.url}${SITE.profilePic}`} />
-    <meta name="twitter:creator" content="@krsahil8825" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={metaImage} />
+    <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
 
     <!-- STRUCTURED DATA (ENTITY SEO) -->
     <script type="application/ld+json">
-        {JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-            "@type": "WebSite",
-            "@id": `${SITE.url}#website`,
-            "url": SITE.url,
-            "name": "Kumar Sahil - Backend Developer",
-            "publisher": {
-                "@id": `${SITE.url}#person`
-            }
-            },
-            {
-            "@type": "Person",
-            "@id": `${SITE.url}#person`,
-            "name": "Kumar Sahil",
-            "alternateName": [
-                "Sahil",
-                "Sahil Kumar",
-                "Kumar Sahil",
-                "Kr Sahil",
-                "KrSahil",
-                "krsahil8825",
-                "Kumar Sahil Developer",
-                "Sahil Developer"
-            ],
-            "url": SITE.url,
-            "image": `${SITE.url}${SITE.profilePic}`,
-            "jobTitle": "Backend Developer",
-            "description": SITE.description,
-            "knowsAbout": [
-                "Python",
-                "Java",
-                "Django",
-                "Flask",
-                "SQL",
-                "Backend Development",
-                "REST APIs",
-                "Data Structures",
-                "Algorithms",
-                "Web Development"
-            ],
-            "sameAs": [
-                SITE.social.github.url,
-                SITE.social.linkedin.url,
-                SITE.social.twitter.url,
-                SITE.social.instagram.url
-            ]
-            }
-        ]
-        })}
+        {JSON.stringify(structuredData)}
     </script>
 </head>
