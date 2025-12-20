@@ -1,76 +1,40 @@
 ---
 import { SITE } from "../config/site";
 
-/// TYPE DEFINITIONS
+const {
+    pType = "website",     // "article" or "website"
+    pTitle = "",           // meta title content
+    pDescription = "",     // meta description content
+    pPath = "",            // use in creating canonical URL
+    pKeywords = [],        // additional keywords
+    pImagePath = "",       // path to image relative to site root
+    pTags = [],            // additional tags for keywords from articles/projects
+    pSlug = "",            // slug for articles/projects used in creating canonical URL except for pages
+    pPublishedTime = "",   // for articles/projects
+    pModifiedTime = "",    // for articles/projects
+    isIndexable = true     // whether the page should be indexable by search engines
+} = Astro.props;
 
-// Define the props types for SEO component
-// these three interfaces help in type checking the props passed to the component
-// and ensure that only the correct combination of props is used
-interface IndexableOnly {
+interface Props {
+    pType?: "article" | "website";
+    pTitle?: string;
+    pDescription?: string;
+    pPath?: string;
+    pKeywords?: string[];
+    pImagePath?: string;
+    pTags?: string[];
+    pSlug?: string;
+    pPublishedTime?: string;
+    pModifiedTime?: string;
     isIndexable?: boolean;
 }
-
-interface FullSEOProps extends IndexableOnly {
-    pageType: "article" | "website";
-    pTitle: string;
-    pDescription: string;
-    pPath: string;
-    pKeywords: string[];
-    pImagePath: string;
-    pTags: string[];
-    pSlug: string;
-    pPublishedTime: string;
-    pModifiedTime: string;
-}
-
-interface IndexOnlyProps extends IndexableOnly {
-    pageType?: never;
-    pTitle?: never;
-    pDescription?: never;
-    pPath?: never;
-    pKeywords?: never;
-    pImagePath?: never;
-    pTags?: never;
-    pSlug?: never;
-    pPublishedTime?: never;
-    pModifiedTime?: never;
-}
-
-type SEOProps = FullSEOProps | IndexOnlyProps;
-
-
-/// PROP EXTRACTION AND DEFAULTS
-
-// Destructure the props with default values
-const props = Astro.props as SEOProps;
-
-// Type guard to check if full SEO props are provided
-const isFullSEO = "pTitle" in props;
-
-
-///  SAFE EXTRACTION OF PROPS
-
-// isIndexable is optional for both types of props
-const isIndexable = props.isIndexable ?? true;
-
-// If full SEO props are provided, extract them; otherwise, set defaults
-const pageType = isFullSEO ? props.pageType : "website";
-const pTitle = isFullSEO ? props.pTitle : "";
-const pDescription = isFullSEO ? props.pDescription : "";
-const pPath = isFullSEO ? props.pPath : "";
-const pKeywords = isFullSEO ? props.pKeywords : [];
-const pImagePath = isFullSEO ? props.pImagePath : "";
-const pTags = isFullSEO ? props.pTags : [];
-const pSlug = isFullSEO ? props.pSlug : "";
-const pPublishedTime = isFullSEO ? props.pPublishedTime : "";
-const pModifiedTime = isFullSEO ? props.pModifiedTime : "";
 
 
 /// META TAG VALUES COMPUTATION
 
 // this check is to ensure that only "article" or "website" is used as type
 // here article type is used for blog posts or articles or projects pages
-const metaType = pageType === "article" ? pageType : "website"; // default to "website" if not "article"
+const metaType = pType === "article" ? pType : "website"; // default to "website" if not "article"
 
 const isArticle = metaType === "article" ? true : false;
 
@@ -79,13 +43,14 @@ const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}`
 
 const metaDescription = pDescription ? pDescription : SITE.description;
 
-const metaURL = pPath ? `${SITE.url}${pPath}` : SITE.url;
+const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : 
+    pPath ? `${SITE.url}/${pPath}` : SITE.url;
 
-const metaKeywords = [...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])].join(", ");
+const metaKeywords = Array.from(new Set([...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])])).join(", ");
 
 const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
 
-const indexable = isIndexable !== undefined ? isIndexable : true;
+const indexable = isIndexable;
 
 
 /// STRUCTURED DATA GENERATION
@@ -143,7 +108,7 @@ const baseGraph = [
 
 // BlogPosting structured data for articles
 const blogPosting =
-    isArticle && pSlug && pPublishedTime
+    isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
         ? {
             "@type": "BlogPosting",
             "@id": `${metaURL}#blogposting`,
