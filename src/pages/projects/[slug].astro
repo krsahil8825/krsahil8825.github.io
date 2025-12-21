@@ -1,5 +1,7 @@
 ---
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import "../../styles/markdown.css";
+
 import SEO from "../../components/SEO.astro";
 import { getCollection } from "astro:content";
 
@@ -72,7 +74,6 @@ const isIndexable = true;
 
             <!-- Content wrapper -->
             <div class="max-w-4xl mx-auto">
-                
                 <!-- HERO IMAGE -->
                 <div
                     class="relative
@@ -164,8 +165,34 @@ const isIndexable = true;
                         View on GitHub
                     </a>
 
+                    <!-- project video url at youtube -->
+                    {
+                        project.data.projectVideoURL && (
+                            <a
+                                href={project.data.projectVideoURL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center justify-center
+                                    h-11
+                                    px-6
+                                    rounded-lg
+                                    font-semibold
+                                    text-yellow-300
+                                    bg-yellow-500/10
+                                    border border-yellow-400/40
+                                    transition-all duration-300
+                                    hover:bg-yellow-500/20
+                                    hover:text-yellow-200
+                                    hover:shadow-[0_0_24px_rgba(234,179,8,0.45)]"
+                            >
+                                Watch Demo
+                            </a>
+                        )
+                    }
+
                     <!-- Live Project Button -->
-                    { project.data.projectURL && (
+                    {
+                        project.data.projectURL && (
                             <a
                                 href={project.data.projectURL}
                                 target="_blank"
@@ -201,7 +228,8 @@ const isIndexable = true;
 
                 <!-- MARKDOWN CONTENT -->
                 <div
-                    class="prose prose-invert
+                    class="markdown-content
+                        prose prose-invert
                         prose-cyan
                         prose-headings:text-cyan-300
                         prose-a:text-purple-300
