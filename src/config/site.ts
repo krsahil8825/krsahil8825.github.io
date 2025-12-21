@@ -67,10 +67,25 @@ export const SITE = {
 
     // Social / Authority
     social: {
-        github: "https://github.com/krsahil8825",
-        linkedin: "https://linkedin.com/in/krsahil8825",
-        twitter: "https://twitter.com/krsahil8825",
-        instagram: "https://instagram.com/krsahil8825",
-        mail: "mailto:contact@krsahil.co.in",
+        github: {
+            url: "https://github.com/krsahil8825",
+            username: "krsahil8825",
+        },
+        linkedin: {
+            url: "https://www.linkedin.com/in/krsahil8825/",
+            username: "krsahil8825",
+        },
+        twitter: {
+            url: "https://twitter.com/krsahil8825",
+            username: "krsahil8825",
+        },
+        instagram: {
+            url: "https://instagram.com/krsahil8825",
+            username: "krsahil8825",
+        },
+        mail: {
+            url: "mailto:contact@krsahil.co.in",
+            email: "contact@krsahil.co.in",
+        },
     }
 } as const;

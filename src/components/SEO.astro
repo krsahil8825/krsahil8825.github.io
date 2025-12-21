@@ -2,15 +2,140 @@
 import { SITE } from "../config/site";
 
 const {
-    name,
-    fullName,
-    description,
-    keywords,
-    url,
-    themeColor,
-    social,
-    locale
-} = SITE;
+    pType = "website",     // "article" or "website"
+    pTitle = "",           // meta title content
+    pDescription = "",     // meta description content
+    pPath = "",            // use in creating canonical URL
+    pKeywords = [],        // additional keywords
+    pImagePath = "",       // path to image relative to site root
+    pTags = [],            // additional tags for keywords from articles/projects
+    pSlug = "",            // slug for articles/projects used in creating canonical URL except for pages
+    pPublishedTime = "",   // for articles/projects
+    pModifiedTime = "",    // for articles/projects
+    isIndexable = true     // whether the page should be indexable by search engines
+} = Astro.props;
+
+interface Props {
+    pType?: "article" | "website";
+    pTitle?: string;
+    pDescription?: string;
+    pPath?: string;
+    pKeywords?: string[];
+    pImagePath?: string;
+    pTags?: string[];
+    pSlug?: string;
+    pPublishedTime?: string;
+    pModifiedTime?: string;
+    isIndexable?: boolean;
+}
+
+
+/// META TAG VALUES COMPUTATION
+
+// this check is to ensure that only "article" or "website" is used as type
+// here article type is used for blog posts or articles or projects pages
+const metaType = pType === "article" ? pType : "website"; // default to "website" if not "article"
+
+const isArticle = metaType === "article" ? true : false;
+
+const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` 
+    : `${SITE.fullName} | ${SITE.role}`;
+
+const metaDescription = pDescription ? pDescription : SITE.description;
+
+const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : 
+    pPath ? `${SITE.url}/${pPath}` : SITE.url;
+
+const metaKeywords = Array.from(new Set([...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])])).join(", ");
+
+const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
+
+const indexable = isIndexable;
+
+
+/// STRUCTURED DATA GENERATION
+
+// Structured Data - JSON-LD for Entity SEO
+const baseGraph = [
+    {
+        "@type": "WebSite",
+        "@id": `${SITE.url}#website`,
+        "url": SITE.url,
+        "name": SITE.fullName,
+        "publisher": {
+            "@id": `${SITE.url}#person`
+        }
+    },
+    {
+        "@type": "Person",
+        "@id": `${SITE.url}#person`,
+        "name": "Kumar Sahil",
+        "alternateName": [
+            "Sahil",
+            "Sahil Kumar",
+            "Kumar Sahil",
+            "Kr Sahil",
+            "KrSahil",
+            "krsahil8825",
+            "Kumar Sahil Developer",
+            "Sahil Developer"
+        ],
+        "url": SITE.url,
+        "image": `${SITE.url}${SITE.profilePic}`,
+        "jobTitle": SITE.role,
+        "description": SITE.description,
+        "knowsAbout": [
+            "Python",
+            "Java",
+            "Django",
+            "Flask",
+            "SQL",
+            "Backend Development",
+            "REST APIs",
+            "Data Structures",
+            "Algorithms",
+            "Web Development"
+        ],
+        "sameAs": [
+            SITE.social.github.url,
+            SITE.social.linkedin.url,
+            SITE.social.twitter.url,
+            SITE.social.instagram.url
+        ]
+    }
+];
+
+
+// BlogPosting structured data for articles
+const blogPosting =
+    isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
+        ? {
+            "@type": "BlogPosting",
+            "@id": `${metaURL}#blogposting`,
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": metaURL
+            },
+            "headline": metaTitle,
+            "description": metaDescription,
+            "image": metaImage,
+            "datePublished": pPublishedTime,
+            "dateModified": pModifiedTime || pPublishedTime,
+            "author": {
+                "@id": `${SITE.url}#person`
+            },
+            "publisher": {
+                "@id": `${SITE.url}#website`
+            }
+        }
+        : null;
+
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": blogPosting
+        ? [...baseGraph, blogPosting]
+        : baseGraph
+};
 ---
 
 <head>
@@ -19,17 +144,29 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>
-        {fullName} - Backend Developer (Python, Java, Django)
+        {metaTitle}
     </title>
 
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
 
-    <meta name="author" content={fullName} />
-    <link rel="canonical" href={url} />
-    <meta name="keywords" content={keywords.join(", ")} />
-    <meta name="language" content={locale} />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="author" content={SITE.fullName} />
+    <link rel="canonical" href={metaURL} />
+    <meta name="keywords" content={metaKeywords} />
+    <meta name="language" content={SITE.locale} />
+
+    <!-- INDEXING -->
+    {indexable ? (
+        <>
+            <meta name="robots" content="index, follow" />
+            <meta name="googlebot" content="index, follow" />
+        </>
+    ) : (
+        <>
+            <meta name="robots" content="noindex, nofollow" />
+            <meta name="googlebot" content="noindex, nofollow" />
+        </>
+    )}
+    
 
     <!-- ICONS -->
     <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
@@ -41,76 +178,26 @@ const {
     <link rel="android-chrome-icon" href={SITE.siteIcons.androidChromeIcon} />
 
     <!-- THEME -->
-    <meta name="theme-color" content={themeColor} />
+    <meta name="theme-color" content={SITE.themeColor} />
 
     <!-- OPEN GRAPH -->
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content={`${fullName} - Backend Developer`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={url} />
-    <meta property="og:site_name" content={fullName} />
-    <meta property="og:locale" content={locale} />
-    <meta property="og:image" content={`${url}${SITE.profilePic}`} />
+    <meta property="og:type" content={metaType} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={metaURL} />
+    <meta property="og:site_name" content={SITE.fullName} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:image" content={metaImage} />
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${fullName} - Backend Developer`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${url}${SITE.profilePic}`} />
-    <meta name="twitter:creator" content="@krsahil8825" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={metaImage} />
+    <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
 
     <!-- STRUCTURED DATA (ENTITY SEO) -->
     <script type="application/ld+json">
-        {JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-            "@type": "WebSite",
-            "@id": `${url}#website`,
-            "url": url,
-            "name": "Kumar Sahil - Backend Developer",
-            "publisher": {
-                "@id": `${url}#person`
-            }
-            },
-            {
-            "@type": "Person",
-            "@id": `${url}#person`,
-            "name": "Kumar Sahil",
-            "alternateName": [
-                "Sahil",
-                "Sahil Kumar",
-                "Kumar Sahil",
-                "Kr Sahil",
-                "KrSahil",
-                "krsahil8825",
-                "Kumar Sahil Developer",
-                "Sahil Developer"
-            ],
-            "url": url,
-            "image": `${url}${SITE.profilePic}`,
-            "jobTitle": "Backend Developer",
-            "description": description,
-            "knowsAbout": [
-                "Python",
-                "Java",
-                "Django",
-                "Flask",
-                "SQL",
-                "Backend Development",
-                "REST APIs",
-                "Data Structures",
-                "Algorithms",
-                "Web Development"
-            ],
-            "sameAs": [
-                social.github,
-                social.linkedin,
-                social.twitter,
-                social.instagram
-            ]
-            }
-        ]
-        })}
+        {JSON.stringify(structuredData)}
     </script>
 </head>
