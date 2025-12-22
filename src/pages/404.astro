@@ -8,24 +8,40 @@ import ErrorText from "../features/404/ErrorText.astro";
 import BackHomeButton from "../features/404/BackHomeButton.astro";
 
 const NOT_FOUND_IMAGE = "/site/404.svg";
+
+// SEO CONSTANTS
+const pType = "website";
+const pTitle = "404 - Page Not Found";
+const pDescription = "Oops! The page you're looking for doesn't exist. Return to the homepage and explore our content.";
+const pPath = "404";
+const pKeywords = ["404", "page not found", "error", "krsahil 404", "sahil 404"];
+const pImagePath = "/site/404-hero.png";
+const pTags: string[] = [];
+const pSlug = "";
+const pPublishedTime = "";
+const pModifiedTime = "";
+const isIndexable = false;
 ---
 
 <MainLayout>
+    <!-- HEAD -->
     <Fragment slot="head">
         <SEO
-            pType="website"
-            pTitle="404 - Page Not Found"
-            pDescription="Oops! The page you're looking for doesn't exist. Return to the homepage and explore our content."
-            pPath="404"
-            pKeywords={["404", "page not found", "error", "krsahil 404", "sahil 404"]}
-            pImagePath="/site/404-hero.png"
-            pTags={[]}
-            pSlug=""
-            pPublishedTime=""
-            pModifiedTime=""
-            isIndexable={false}
+            pType={pType}
+            pTitle={pTitle}
+            pDescription={pDescription}
+            pPath={pPath}
+            pKeywords={pKeywords}
+            pImagePath={pImagePath}
+            pTags={pTags}
+            pSlug={pSlug}
+            pPublishedTime={pPublishedTime}
+            pModifiedTime={pModifiedTime}
+            isIndexable={isIndexable}
         />
     </Fragment>
+
+    <!-- MAIN -->
     <Fragment slot="main">
         <section
             aria-label="404 page not found"

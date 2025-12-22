@@ -1,5 +1,5 @@
 ---
-import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 import "../../styles/markdown.css";
 
 import SEO from "../../components/SEO.astro";
@@ -35,7 +35,7 @@ const pModifiedTime = project.data.modifiedTime ?? "";
 const isIndexable = true;
 ---
 
-<ArticleLayout>
+<MainLayout>
     <!-- HEAD -->
     <Fragment slot="head">
         <SEO
@@ -247,4 +247,4 @@ const isIndexable = true;
             </div>
         </article>
     </Fragment>
-</ArticleLayout>
+</MainLayout>

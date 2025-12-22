@@ -2,70 +2,32 @@
 import { SITE } from "../../config/site";
 ---
 
-<section
-    id="contact"
-    aria-labelledby="contact-heading"
-    class="relative
-    py-28 sm:py-32
-    px-4 sm:px-6 lg:px-8
-    overflow-hidden"
->
+<section id="contact" aria-labelledby="contact-heading" class="relative py-28 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <!-- Background accent -->
-    <div class="absolute inset-0 -z-10
-        bg-linear-to-b
-        from-transparent
-        via-cyan-500/5
-        to-transparent"
-    >
-    </div>
+    <div class="absolute inset-0 -z-10 bg-linear-to-b from-transparent via-cyan-500/5 to-transparent"></div>
 
     <div class="max-w-6xl mx-auto">
-
         <!-- Section Heading -->
         <div class="text-center mb-16">
-            <h2
-                id="contact-heading"
-                class="text-3xl sm:text-4xl md:text-5xl
-                font-extrabold
-                neon-text"
-            >
-                Contact Me
-            </h2>
+            <h2 id="contact-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold neon-text">Contact Me</h2>
 
-            <p class="mt-4
-                max-w-2xl mx-auto
-                text-sm sm:text-base
-                text-gray-400"
-            >
+            <p class="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-400">
                 Have a question, collaboration idea, or opportunity? Feel free to reach out using the form below or connect with
                 me on social platforms.
             </p>
         </div>
 
         <!-- Contact Content -->
-        <div 
-            class="flex flex-col items-center
-            gap-12"
-        >
-
+        <div class="flex flex-col items-center gap-12">
             <!-- Form Card -->
             <div
-                class="w-full
-                max-w-3xl
-                rounded-2xl
-                bg-gray-300
-                backdrop-blur-md
-                border border-white/10
-                shadow-[0_0_40px_rgba(34,211,238,0.08)]
-                overflow-hidden"
+                class="w-full max-w-3xl rounded-2xl bg-gray-300 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.08)] overflow-hidden"
             >
                 <!-- Responsive iframe wrapper -->
                 <div class="relative w-full pt-[115%] sm:pt-[90%]">
                     <iframe
                         src="https://docs.google.com/forms/d/e/1FAIpQLSckdm39FGYi8PQ0pR61kQAHwgKXw7J3n9FJ9EL_xyJgwQVhjQ/viewform?embedded=true"
-                        class="absolute inset-0
-                        w-full h-full
-                        border-0"
+                        class="absolute inset-0 w-full h-full border-0"
                         loading="lazy"
                     >
                         Loading…
@@ -76,7 +38,7 @@ import { SITE } from "../../config/site";
             <!-- Social Links -->
             <div class="flex flex-wrap justify-center gap-6 text-sm">
                 <a href={SITE.social.github.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="GitHub">
-                    GitHub 
+                    GitHub
                 </a>
 
                 <a href={SITE.social.linkedin.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="LinkedIn">
@@ -91,9 +53,7 @@ import { SITE } from "../../config/site";
                     Instagram
                 </a>
 
-                <a href={SITE.social.mail.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="Email"> 
-                    Email 
-                </a>
+                <a href={SITE.social.mail.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="Email"> Email </a>
             </div>
         </div>
     </div>

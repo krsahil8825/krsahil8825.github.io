@@ -1,7 +1,10 @@
 ---
-import ArticleLayout from '../../layouts/ArticleLayout.astro';
-import SEO from '../../components/SEO.astro';
-import ProjectCard from "../../components/ProjectCard.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import SEO from "../../components/SEO.astro";
+
+import NeonGradientBackground from "../../features/projects/NeonGradientBackground.astro";
+import ProjectHeader from "../../features/projects/ProjectHeader.astro";
+import ProjectsGrid from "../../features/projects/ProjectsGrid.astro";
 
 // DATA FETCHING
 import { getCollection } from "astro:content";
@@ -29,7 +32,7 @@ const pModifiedTime = "";
 const isIndexable = true;
 ---
 
-<ArticleLayout>
+<MainLayout>
     <!-- HEAD -->
     <Fragment slot="head">
         <SEO
@@ -49,89 +52,10 @@ const isIndexable = true;
 
     <!-- MAIN -->
     <Fragment slot="main">
-        <section
-            id="projects"
-            class="
-            relative
-            px-3 sm:px-6 lg:px-8
-            pt-28 sm:pt-32
-            pb-20
-            overflow-hidden
-            "
-        >
-            <!-- Neon gradient background -->
-            <div
-                class="
-                absolute inset-0 -z-10
-                bg-linear-to-br
-                from-cyan-500/10
-                via-transparent
-                to-purple-500/10
-                "
-            ></div>
-
-            <!-- Header -->
-            <div class="max-w-7xl mx-auto text-center mb-14">
-                <h1
-                    class="
-                    text-3xl sm:text-4xl md:text-5xl lg:text-6xl
-                    font-extrabold
-                    text-cyan-300
-                    neon-text
-                    "
-                >
-                    Projects
-                </h1>
-
-                <p
-                    class="
-                    mt-5
-                    max-w-2xl
-                    mx-auto
-                    text-sm sm:text-base md:text-lg
-                    text-gray-400
-                    leading-relaxed
-                    "
-                >
-                    A curated selection of real-world projects showcasing backend
-                    engineering, system design, and production-quality development.
-                </p>
-            </div>
-
-            <!-- Content -->
-            {posts.length === 0 ? (
-                <p
-                    class="
-                    text-center
-                    text-gray-400
-                    text-sm sm:text-base
-                    "
-                >
-                    No projects found.
-                </p>
-            ) : (
-                <div
-                    class="
-                    max-w-7xl mx-auto
-                    grid
-                    grid-cols-1
-                    px-10
-                    min-[540px]:px-5
-                    min-[540px]:grid-cols-2
-                    lg:grid-cols-3
-                    gap-6 sm:gap-8
-                    "
-                >
-                    {posts.map((post) => (
-                        <ProjectCard
-                            slug={post.slug}
-                            title={post.data.title}
-                            description={post.data.description}
-                            imagePath={post.data.imagePath}
-                        />
-                    ))}
-                </div>
-            )}
+        <section id="projects" class="relative px-3 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-20 overflow-hidden">
+            <NeonGradientBackground />
+            <ProjectHeader />
+            <ProjectsGrid posts={posts} />
         </section>
     </Fragment>
-</ArticleLayout>
+</MainLayout>
