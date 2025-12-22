@@ -1,0 +1,25 @@
+---
+import ProjectHero from "./ProjectHero.astro";
+import ProjectMeta from "./ProjectMeta.astro";
+import ProjectActions from "./ProjectActions.astro";
+import ProjectDescription from "./ProjectDescription.astro";
+import ProjectContent from "./ProjectContent.astro";
+import ProjectNavigation from "./ProjectNavigation.astro";
+
+const { project, Content, prevSlug, nextSlug } = Astro.props;
+---
+
+<article class="relative px-3 sm:px-6 lg:px-8 pt-11 sm:pt-15 pb-24 overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-linear-to-br from-cyan-500/10 via-transparent to-purple-500/10"></div>
+
+    <div class="max-w-4xl mx-auto">
+        <ProjectHero project={project} />
+        <ProjectMeta project={project} />
+        <ProjectActions project={project} />
+        <ProjectDescription description={project.data.description} />
+        <ProjectContent>
+            <Content />
+        </ProjectContent>
+        <ProjectNavigation prevSlug={prevSlug} nextSlug={nextSlug} />
+    </div>
+</article>

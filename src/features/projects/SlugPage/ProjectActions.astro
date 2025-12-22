@@ -1,0 +1,27 @@
+---
+const { project } = Astro.props;
+---
+
+<div class="mt-8 flex flex-wrap gap-4">
+    {
+        project.data.githubURL && (
+            <a href={project.data.githubURL} target="_blank" class="btn-cyan">
+                View on GitHub
+            </a>
+        )
+    }
+    {
+        project.data.projectVideoURL && (
+            <a href={project.data.projectVideoURL} target="_blank" class="btn-yellow">
+                Watch Demo
+            </a>
+        )
+    }
+    {
+        project.data.projectURL && (
+            <a href={project.data.projectURL} target="_blank" class="btn-purple">
+                Live Project
+            </a>
+        )
+    }
+</div>
