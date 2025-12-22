@@ -1,0 +1,20 @@
+---
+const { image } = Astro.props;
+
+interface Props {
+    image: string;
+}
+---
+
+<div class="relative mb-10">
+    <!-- Glow -->
+    <div class="absolute inset-0 rounded-full bg-cyan-400/25 blur-3xl scale-110"></div>
+
+    <img
+        src={image}
+        alt="404 Page Not Found"
+        loading="eager"
+        decoding="async"
+        class="relative w-full object-contain drop-shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+    />
+</div>
