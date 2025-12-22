@@ -2,17 +2,17 @@
 import { SITE } from "../config/site";
 
 const {
-    pType = "website",     // "article" or "website"
-    pTitle = "",           // meta title content
-    pDescription = "",     // meta description content
-    pPath = "",            // use in creating canonical URL
-    pKeywords = [],        // additional keywords
-    pImagePath = "",       // path to image relative to site root
-    pTags = [],            // additional tags for keywords from articles/projects
-    pSlug = "",            // slug for articles/projects used in creating canonical URL except for pages
-    pPublishedTime = "",   // for articles/projects
-    pModifiedTime = "",    // for articles/projects
-    isIndexable = true     // whether the page should be indexable by search engines
+    pType = "website", // "article" or "website"
+    pTitle = "", // meta title content
+    pDescription = "", // meta description content
+    pPath = "", // use in creating canonical URL
+    pKeywords = [], // additional keywords
+    pImagePath = "", // path to image relative to site root
+    pTags = [], // additional tags for keywords from articles/projects
+    pSlug = "", // slug for articles/projects used in creating canonical URL except for pages
+    pPublishedTime = "", // for articles/projects
+    pModifiedTime = "", // for articles/projects
+    isIndexable = true, // whether the page should be indexable by search engines
 } = Astro.props;
 
 interface Props {
@@ -29,7 +29,6 @@ interface Props {
     isIndexable?: boolean;
 }
 
-
 /// META TAG VALUES COMPUTATION
 
 // this check is to ensure that only "article" or "website" is used as type
@@ -38,20 +37,17 @@ const metaType = pType === "article" ? pType : "website"; // default to "website
 
 const isArticle = metaType === "article" ? true : false;
 
-const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` 
-    : `${SITE.fullName} | ${SITE.role}`;
+const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` : `${SITE.fullName} | ${SITE.role}`;
 
 const metaDescription = pDescription ? pDescription : SITE.description;
 
-const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : 
-    pPath ? `${SITE.url}/${pPath}` : SITE.url;
+const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : pPath ? `${SITE.url}/${pPath}` : SITE.url;
 
 const metaKeywords = Array.from(new Set([...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])])).join(", ");
 
 const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
 
 const indexable = isIndexable;
-
 
 /// STRUCTURED DATA GENERATION
 
@@ -60,17 +56,17 @@ const baseGraph = [
     {
         "@type": "WebSite",
         "@id": `${SITE.url}#website`,
-        "url": SITE.url,
-        "name": SITE.fullName,
-        "publisher": {
-            "@id": `${SITE.url}#person`
-        }
+        url: SITE.url,
+        name: SITE.fullName,
+        publisher: {
+            "@id": `${SITE.url}#person`,
+        },
     },
     {
         "@type": "Person",
         "@id": `${SITE.url}#person`,
-        "name": "Kumar Sahil",
-        "alternateName": [
+        name: "Kumar Sahil",
+        alternateName: [
             "Sahil",
             "Sahil Kumar",
             "Kumar Sahil",
@@ -78,13 +74,13 @@ const baseGraph = [
             "KrSahil",
             "krsahil8825",
             "Kumar Sahil Developer",
-            "Sahil Developer"
+            "Sahil Developer",
         ],
-        "url": SITE.url,
-        "image": `${SITE.url}${SITE.profilePic}`,
-        "jobTitle": SITE.role,
-        "description": SITE.description,
-        "knowsAbout": [
+        url: SITE.url,
+        image: `${SITE.url}${SITE.profilePic}`,
+        jobTitle: SITE.role,
+        description: SITE.description,
+        knowsAbout: [
             "Python",
             "Java",
             "Django",
@@ -94,47 +90,39 @@ const baseGraph = [
             "REST APIs",
             "Data Structures",
             "Algorithms",
-            "Web Development"
+            "Web Development",
         ],
-        "sameAs": [
-            SITE.social.github.url,
-            SITE.social.linkedin.url,
-            SITE.social.twitter.url,
-            SITE.social.instagram.url
-        ]
-    }
+        sameAs: [SITE.social.github.url, SITE.social.linkedin.url, SITE.social.twitter.url, SITE.social.instagram.url],
+    },
 ];
 
-
-// BlogPosting structured data for articles
-const blogPosting =
+// ArticleGraph structured data for articles
+const ArticleGraph =
     isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
         ? {
-            "@type": "BlogPosting",
-            "@id": `${metaURL}#blogposting`,
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": metaURL
-            },
-            "headline": metaTitle,
-            "description": metaDescription,
-            "image": metaImage,
-            "datePublished": pPublishedTime,
-            "dateModified": pModifiedTime || pPublishedTime,
-            "author": {
-                "@id": `${SITE.url}#person`
-            },
-            "publisher": {
-                "@id": `${SITE.url}#website`
-            }
-        }
+              "@type": "Article",
+              "@id": `${metaURL}#article`,
+              mainEntityOfPage: {
+                  "@type": "WebPage",
+                  "@id": metaURL,
+              },
+              headline: metaTitle,
+              description: metaDescription,
+              image: metaImage,
+              datePublished: pPublishedTime,
+              dateModified: pModifiedTime || pPublishedTime,
+              author: {
+                  "@id": `${SITE.url}#person`,
+              },
+              publisher: {
+                  "@id": `${SITE.url}#website`,
+              },
+          }
         : null;
 
 const structuredData = {
     "@context": "https://schema.org",
-    "@graph": blogPosting
-        ? [...baseGraph, blogPosting]
-        : baseGraph
+    "@graph": ArticleGraph ? [...baseGraph, ArticleGraph] : baseGraph,
 };
 ---
 
@@ -153,20 +141,25 @@ const structuredData = {
     <link rel="canonical" href={metaURL} />
     <meta name="keywords" content={metaKeywords} />
     <meta name="language" content={SITE.locale} />
+    <link rel="author" href={SITE.url} />
 
     <!-- INDEXING -->
-    {indexable ? (
-        <>
-            <meta name="robots" content="index, follow" />
-            <meta name="googlebot" content="index, follow" />
-        </>
-    ) : (
-        <>
-            <meta name="robots" content="noindex, nofollow" />
-            <meta name="googlebot" content="noindex, nofollow" />
-        </>
-    )}
-    
+    {
+        indexable ? (
+            <>
+                <meta name="robots" content="index, follow" />
+                <meta name="googlebot" content="index, follow" />
+            </>
+        ) : (
+            <>
+                <meta name="robots" content="noindex, nofollow" />
+                <meta name="googlebot" content="noindex, nofollow" />
+            </>
+        )
+    }
+
+    {isArticle && pPublishedTime ? <meta property="article:published_time" content={pPublishedTime} /> : null}
+    {isArticle && pModifiedTime ? <meta property="article:modified_time" content={pModifiedTime} /> : null}
 
     <!-- ICONS -->
     <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
@@ -188,6 +181,7 @@ const structuredData = {
     <meta property="og:site_name" content={SITE.fullName} />
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:image" content={metaImage} />
+    <meta property="og:image:alt" content={metaTitle} />
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -196,8 +190,9 @@ const structuredData = {
     <meta name="twitter:image" content={metaImage} />
     <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
 
+    <!-- HERE WE CAN ADD ADDITIONAL HEAD ELEMENTS THROUGH THE SLOT -->
+    <slot />
+
     <!-- STRUCTURED DATA (ENTITY SEO) -->
-    <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 </head>

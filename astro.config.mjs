@@ -18,4 +18,8 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
     },
+    redirects: {
+        "/projects": "/projects/page/1",
+        "/projects/page/": "/projects/page/1",
+    },
 });

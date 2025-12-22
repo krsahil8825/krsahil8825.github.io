@@ -1,0 +1,20 @@
+---
+const { project } = Astro.props;
+---
+
+<div class="mt-4">
+    <div class="text-sm text-gray-400 flex gap-6">
+        <span>Published: {project.data.publishedTime}</span>
+        {project.data.modifiedTime && <span>Updated: {project.data.modifiedTime}</span>}
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+        {
+            project.data.tags.map((tag: any) => (
+                <span class="px-3 py-1 text-xs rounded-full border border-purple-400/40 text-purple-300 bg-purple-500/10">
+                    {tag}
+                </span>
+            ))
+        }
+    </div>
+</div>

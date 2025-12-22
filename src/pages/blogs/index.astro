@@ -1,21 +1,22 @@
 ---
-import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
 import SEO from '../../components/SEO.astro';
 
+// SEO CONSTANTS
 const pType = "website";
 const pTitle = "Blogs";
 const pDescription = "Read My Blogs - Dive into a collection of insightful articles on web development, programming, and technology. Stay updated with the latest trends, tutorials, and tips from my personal experiences and expertise.";
 const pPath = "blogs";
 const pKeywords = ["blogs", "articles", "krsahil blogs", "sahil blogs", "krsahil8825 blogs", "webdevelopment blogs"];
 const pImagePath = "/site/blogs-hero.png";
-const pTags = [];
+const pTags: string[] = [];
 const pSlug = "";
 const pPublishedTime = "";
 const pModifiedTime = "";
 const isIndexable = true;
 ---
 
-<ArticleLayout>
+<MainLayout>
 
     <!-- HEAD SLOT -->
     <Fragment slot="head">
@@ -36,7 +37,7 @@ const isIndexable = true;
 
     <!-- MAIN SLOT -->
     <Fragment slot="main">
-        <h1 class="text-4xl font-bold text-center mt-20">Coming Soon</h1>
+        <h1 class="text-4xl font-bold text-center mt-20 mb-20">Coming Soon</h1>
     </Fragment>
 
-</ArticleLayout>
+</MainLayout>

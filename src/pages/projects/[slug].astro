@@ -1,31 +1,40 @@
 ---
-import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 import "../../styles/markdown.css";
 
 import SEO from "../../components/SEO.astro";
+import ProjectArticle from "../../features/projects/SlugComponent/ProjectArticle.astro";
+
 import { getCollection } from "astro:content";
 
-// STATIC PATHS
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
 
-    return projects.map((project) => ({
+    projects.sort((a, b) => new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime());
+
+    return projects.map((project, index) => ({
         params: { slug: project.slug },
-        props: { project },
+        props: {
+            project,
+            index,
+            total: projects.length,
+            slugs: projects.map((p) => p.slug),
+        },
     }));
 }
 
-// PROPS
-const { project } = Astro.props;
+const { project, index, total, slugs } = Astro.props;
 
-// MARKDOWN RENDER
+const prevSlug = index > 0 ? slugs[index - 1] : null;
+const nextSlug = index < total - 1 ? slugs[index + 1] : null;
+
 const { Content } = await project.render();
 
-// SEO CONSTANTS
+// SEO
 const pType = "article";
 const pTitle = project.data.title;
 const pDescription = project.data.description;
-const pPath = `projects`;
+const pPath = "projects";
 const pKeywords = project.data.keywords;
 const pImagePath = project.data.imagePath;
 const pTags = project.data.tags;
@@ -35,8 +44,7 @@ const pModifiedTime = project.data.modifiedTime ?? "";
 const isIndexable = true;
 ---
 
-<ArticleLayout>
-    <!-- HEAD -->
+<MainLayout>
     <Fragment slot="head">
         <SEO
             pType={pType}
@@ -53,198 +61,7 @@ const isIndexable = true;
         />
     </Fragment>
 
-    <!-- MAIN -->
     <Fragment slot="main">
-        <article
-            class="relative
-                px-3 sm:px-6 lg:px-8
-                pt-28 sm:pt-32
-                pb-24
-                overflow-hidden"
-        >
-            <!-- Neon background -->
-            <div
-                class="absolute inset-0 -z-10
-                    bg-linear-to-br
-                    from-cyan-500/10
-                    via-transparent
-                    to-purple-500/10"
-            >
-            </div>
-
-            <!-- Content wrapper -->
-            <div class="max-w-4xl mx-auto">
-                <!-- HERO IMAGE -->
-                <div
-                    class="relative
-                        w-full
-                        aspect-video
-                        rounded-xl
-                        overflow-hidden
-                        border
-                        border-cyan-400/30
-                        bg-black/30
-                        shadow-[0_0_40px_rgba(34,211,238,0.25)]
-                        mb-12"
-                >
-                    <img
-                        src={project.data.imagePath}
-                        alt={project.data.title}
-                        loading="eager"
-                        decoding="async"
-                        class="w-full h-full
-                        object-cover"
-                    />
-                </div>
-
-                <!-- TITLE -->
-                <h1
-                    class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl
-                        font-extrabold
-                        text-cyan-300
-                        neon-text
-                        leading-tight"
-                >
-                    {project.data.title}
-                </h1>
-
-                <!-- META -->
-                <div
-                    class="mt-4
-                        flex flex-wrap gap-x-6 gap-y-2
-                        text-sm
-                        text-gray-400"
-                >
-                    <span>Published: {project.data.publishedTime}</span>
-                    {project.data.modifiedTime && <span>Updated: {project.data.modifiedTime}</span>}
-                </div>
-
-                <!-- TAGS -->
-                <div class="mt-6 flex flex-wrap gap-2">
-                    {
-                        project.data.tags.map((tag) => (
-                            <span
-                                class="
-                                px-3 py-1
-                                text-xs
-                                rounded-full
-                                border
-                                border-purple-400/40
-                                text-purple-300
-                                bg-purple-500/10
-                            "
-                            >
-                                {tag}
-                            </span>
-                        ))
-                    }
-                </div>
-
-                <!-- PROJECT LINKS  -->
-                <div class="mt-8
-                        flex flex-wrap
-                        gap-4">
-                    <!-- GitHub Button -->
-                    <a
-                        href={project.data.githubURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center justify-center
-                            h-11
-                            px-6
-                            rounded-lg
-                            font-semibold
-                            text-cyan-300
-                            bg-cyan-500/10
-                            border border-cyan-400/40
-                            transition-all duration-300
-                            hover:bg-cyan-500/20
-                            hover:text-cyan-200
-                            hover:shadow-[0_0_24px_rgba(34,211,238,0.45)]"
-                    >
-                        View on GitHub
-                    </a>
-
-                    <!-- project video url at youtube -->
-                    {
-                        project.data.projectVideoURL && (
-                            <a
-                                href={project.data.projectVideoURL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center justify-center
-                                    h-11
-                                    px-6
-                                    rounded-lg
-                                    font-semibold
-                                    text-yellow-300
-                                    bg-yellow-500/10
-                                    border border-yellow-400/40
-                                    transition-all duration-300
-                                    hover:bg-yellow-500/20
-                                    hover:text-yellow-200
-                                    hover:shadow-[0_0_24px_rgba(234,179,8,0.45)]"
-                            >
-                                Watch Demo
-                            </a>
-                        )
-                    }
-
-                    <!-- Live Project Button -->
-                    {
-                        project.data.projectURL && (
-                            <a
-                                href={project.data.projectURL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center justify-center
-                                    h-11
-                                    px-6
-                                    rounded-lg
-                                    font-semibold
-                                    text-purple-300
-                                    bg-purple-500/10
-                                    border border-purple-400/40
-                                    transition-all duration-300
-                                    hover:bg-purple-500/20
-                                    hover:text-purple-200
-                                    hover:shadow-[0_0_24px_rgba(168,85,247,0.45)]"
-                            >
-                                Live Project
-                            </a>
-                        )
-                    }
-                </div>
-
-                <!-- DESCRIPTION -->
-                <p
-                    class="mt-8
-                        text-base sm:text-lg
-                        text-gray-300
-                        leading-relaxed"
-                >
-                    {project.data.description}
-                </p>
-
-                <!-- MARKDOWN CONTENT -->
-                <div
-                    class="markdown-content
-                        prose prose-invert
-                        prose-cyan
-                        prose-headings:text-cyan-300
-                        prose-a:text-purple-300
-                        prose-strong:text-gray-200
-                        prose-code:text-cyan-300
-                        prose-pre:bg-black/40
-                        prose-pre:border
-                        prose-pre:border-cyan-400/20
-                        prose-pre:rounded-lg
-                        max-w-none
-                        mt-12"
-                >
-                    <Content />
-                </div>
-            </div>
-        </article>
+        <ProjectArticle project={project} Content={Content} prevSlug={prevSlug} nextSlug={nextSlug} />
     </Fragment>
-</ArticleLayout>
+</MainLayout>

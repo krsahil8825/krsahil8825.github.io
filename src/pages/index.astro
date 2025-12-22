@@ -1,15 +1,21 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
-import Skills from "../components/Skills.astro";
-import Projects from "../components/Contact.astro";
-import Contact from "../components/Contact.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+import SEO from "../components/SEO.astro";
+
+import Hero from "../features/index/Hero.astro";
+import About from "../features/index/About.astro";
+import Skills from "../features/index/Skills.astro";
+import Contact from "../features/index/Contact.astro";
 ---
 
-<BaseLayout>
+<MainLayout>
+    <Fragment slot="head">
+        <SEO />
+    </Fragment>
+    <Fragment slot="main">
         <Hero />
         <About />
         <Skills />
         <Contact />
-</BaseLayout>
+    </Fragment>
+</MainLayout>

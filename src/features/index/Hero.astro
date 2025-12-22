@@ -1,0 +1,70 @@
+---
+import { SITE } from "../../config/site";
+---
+
+<section
+    id="home"
+    aria-label={`Hero section of ${SITE.fullName}`}
+    class="relative min-h-screen flex items-center pt-15 sm:pt-19 lg:pt-23 pb-10 lg:pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden"
+>
+    <!-- Neon gradient background -->
+    <div class="absolute inset-0 -z-10 bg-linear-to-br from-cyan-500/15 via-transparent to-purple-500/15"></div>
+
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-14 lg:gap-24">
+        <!-- IMAGE -->
+        <div class="order-1 lg:order-2 flex justify-center lg:justify-end mt-6 lg:mt-0">
+            <div class="relative">
+                <!-- Controlled glow -->
+                <div class="absolute inset-0 rounded-full bg-cyan-400/25 blur-3xl scale-110"></div>
+
+                <img
+                    src={SITE.profilePic}
+                    alt={`Profile photo of ${SITE.fullName} (${SITE.aliases.join(", ")})`}
+                    width="320"
+                    height="320"
+                    loading="eager"
+                    decoding="async"
+                    class="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-80 lg:h-80 rounded-full object-cover border-[3px] border-cyan-400/50 shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+                />
+            </div>
+        </div>
+
+        <!-- TEXT -->
+        <div class="order-2 lg:order-1 text-center lg:text-left">
+            <p class="text-sm uppercase tracking-widest text-cyan-400 font-semibold">I am</p>
+
+            <h1 class="mt-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight neon-text">
+                {SITE.fullName}
+            </h1>
+
+            <p class="mt-5 text-base sm:text-lg md:text-xl text-cyan-300/90 font-medium">
+                {SITE.role}
+            </p>
+
+            <p class="mt-7 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed">
+                {SITE.shortBio}
+            </p>
+
+            <!-- CTAs -->
+            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <!-- Primary CTA -->
+                <a
+                    href="/projects"
+                    class="group inline-flex items-center justify-center h-12 min-w-40 px-7 rounded-lg font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-400/40 transition-all duration-300 hover:bg-cyan-500/20 hover:text-cyan-200 hover:shadow-[0_0_24px_rgba(34,211,238,0.45)]"
+                >
+                    View Projects
+                </a>
+
+                <!-- Secondary CTA -->
+                <a
+                    href={SITE.social.github.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center justify-center h-12 min-w-40 px-7 rounded-lg font-semibold text-purple-300 bg-purple-500/10 border border-purple-400/40 transition-all duration-300 hover:bg-purple-500/20 hover:text-purple-200 hover:shadow-[0_0_24px_rgba(168,85,247,0.45)]"
+                >
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
