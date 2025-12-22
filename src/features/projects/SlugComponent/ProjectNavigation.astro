@@ -1,0 +1,40 @@
+---
+const { prevSlug, nextSlug } = Astro.props;
+---
+
+<div class="w-full flex flex-col items-center justify-center border-t border-purple-400/20 pt-10 mb-10">
+    {
+        prevSlug || nextSlug ? (
+            <p class="text-sm sm:text-base text-gray-400 text-center max-w-xl mx-auto mb-4">
+                Browse other projects that demonstrate real-world problem solving, and production-ready development.
+            </p>
+        ) : null
+    }
+    <nav class="mt-6 flex gap-6 w-full align-middle justify-between px-5">
+        {
+            prevSlug ? (
+                <a
+                    href={`/projects/${prevSlug}`}
+                    class="nav-prev px-5 py-2 rounded-lg border border-cyan-400/40 text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 transition-all"
+                >
+                    &#8249;
+                </a>
+            ) : (
+                <div class="flex-1" />
+            )
+        }
+
+        {
+            nextSlug ? (
+                <a
+                    href={`/projects/${nextSlug}`}
+                    class="nav-next px-5 py-2 rounded-lg border border-purple-400/40 text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 transition-all"
+                >
+                    &#8250;
+                </a>
+            ) : (
+                <div class="flex-1" />
+            )
+        }
+    </nav>
+</div>

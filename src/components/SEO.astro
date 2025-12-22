@@ -196,6 +196,9 @@ const structuredData = {
     <meta name="twitter:image" content={metaImage} />
     <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
 
+    <!-- HERE WE CAN ADD ADDITIONAL HEAD ELEMENTS THROUGH THE SLOT -->
+    <slot />
+
     <!-- STRUCTURED DATA (ENTITY SEO) -->
     <script type="application/ld+json">
         {JSON.stringify(structuredData)}

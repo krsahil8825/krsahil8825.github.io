@@ -1,0 +1,21 @@
+---
+const { page, totalPages, basePath = "/projects/page" } = Astro.props;
+---
+
+<nav class="mt-16 flex justify-center gap-4">
+    {
+        page > 1 && (
+            <a href={`${basePath}/${page - 1}`} class="px-5 py-2 rounded-lg border border-cyan-400/40 text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 transition-all" aria-label="Previous page">
+                &#8249;
+            </a>
+        )
+    }
+
+    {
+        page < totalPages && (
+            <a href={`${basePath}/${page + 1}`} class="px-5 py-2 rounded-lg border border-purple-400/40 text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 transition-all" aria-label="Next page">
+                &#8250;
+            </a>
+        )
+    }
+</nav>
