@@ -7,7 +7,7 @@ tags: ["django", "web development", "python"]
 publishedTime: "2025-12-23"
 modifiedTime: "2025-12-23"
 githubURL: "https://github.com/krsahil8825/network-social-media-platform"
-# projectURL: ""
+# projectURL: "https://network-social-media-platform.onrender.com/"
 # projectVideoURL: "" 
 ---
 
