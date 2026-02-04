@@ -30,6 +30,30 @@ const projectsCollection = defineCollection({
     }),
 });
 
+const blogCollection = defineCollection({
+    type: "content",
+    schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        keywords: z.array(z.string()),
+        imagePath: z.string(),
+        tags: z.array(z.string()),
+
+        publishedTime: z.string().refine(
+            (value) => !isNaN(Date.parse(value)),
+            { message: "publishedTime must be a valid date string" }
+        ),
+
+        modifiedTime: z
+            .string().refine(
+                (value) => !isNaN(Date.parse(value)),
+                { message: "modifiedTime must be a valid date string" }
+            ).optional(),
+
+    }),
+});
+
 export const collections = {
     projects: projectsCollection,
+    blogs: blogCollection,
 };

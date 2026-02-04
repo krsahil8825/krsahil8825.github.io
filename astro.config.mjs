@@ -21,5 +21,7 @@ export default defineConfig({
     redirects: {
         "/projects": "/projects/page/1",
         "/projects/page/": "/projects/page/1",
+        "/blogs": "/blogs/page/1",
+        "/blogs/page/": "/blogs/page/1",
     },
 });

@@ -5,7 +5,7 @@ keywords: ["django", "social media", "web development", "python", "network"]
 imagePath: "/posts/projects/network-social-media-platform.jpg"
 tags: ["django", "web development", "python"]
 publishedTime: "2025-12-23"
-modifiedTime: "2025-12-23"
+modifiedTime: "2026-02-04"
 githubURL: "https://github.com/krsahil8825/network-social-media-platform"
 projectURL: "https://network-social-media-platform.onrender.com/"
 # projectVideoURL: "" 
@@ -70,7 +70,7 @@ Network is a full-featured social media application that enables users to create
 
 -   **Django 5.2.7**: Modern Python web framework
 -   **Python**: Core language for backend development
--   **SQLite**: Database for data persistence
+-   **MySQL**: Database for data persistence
 
 ### Frontend
 
