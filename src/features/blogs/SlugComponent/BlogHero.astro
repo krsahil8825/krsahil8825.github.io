@@ -1,0 +1,15 @@
+---
+const { blog } = Astro.props;
+---
+
+<div class="mb-12">
+    <div
+        class="relative w-full aspect-video rounded-xl overflow-hidden border border-cyan-400/30 bg-black/30 shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+    >
+        <img src={blog.data.imagePath} alt={blog.data.title} class="w-full h-full object-cover" />
+    </div>
+
+    <h1 class="mt-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-cyan-300 neon-text">
+        {blog.data.title}
+    </h1>
+</div>

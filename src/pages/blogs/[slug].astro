@@ -1,0 +1,67 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../styles/markdown.css";
+
+import SEO from "../../components/SEO.astro";
+import BlogArticle from "../../features/blogs/SlugComponent/BlogArticle.astro";
+
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+    const blogs = await getCollection("blogs");
+
+    blogs.sort((a, b) => new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime());
+
+    return blogs.map((blog, index) => ({
+        params: { slug: blog.slug },
+        props: {
+            blog,
+            index,
+            total: blogs.length,
+            slugs: blogs.map((b) => b.slug),
+        },
+    }));
+}
+
+const { blog, index, total, slugs } = Astro.props;
+
+const prevSlug = index > 0 ? slugs[index - 1] : null;
+const nextSlug = index < total - 1 ? slugs[index + 1] : null;
+
+const { Content } = await blog.render();
+
+// SEO
+const pType = "article";
+const pTitle = blog.data.title;
+const pDescription = blog.data.description;
+const pPath = "blogs";
+const pKeywords = blog.data.keywords;
+const pImagePath = blog.data.imagePath;
+const pTags = blog.data.tags;
+const pSlug = blog.slug;
+const pPublishedTime = blog.data.publishedTime;
+const pModifiedTime = blog.data.modifiedTime ?? "";
+const isIndexable = true;
+---
+
+<MainLayout>
+    <Fragment slot="head">
+        <SEO
+            pType={pType}
+            pTitle={pTitle}
+            pDescription={pDescription}
+            pPath={pPath}
+            pKeywords={pKeywords}
+            pImagePath={pImagePath}
+            pTags={pTags}
+            pSlug={pSlug}
+            pPublishedTime={pPublishedTime}
+            pModifiedTime={pModifiedTime}
+            isIndexable={isIndexable}
+        />
+    </Fragment>
+
+    <Fragment slot="main">
+        <BlogArticle blog={blog} Content={Content} prevSlug={prevSlug} nextSlug={nextSlug} />
+    </Fragment>
+</MainLayout>
