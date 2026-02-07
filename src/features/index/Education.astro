@@ -1,0 +1,109 @@
+---
+const EDUCATION = [
+    {
+        institution: "Amity University Patna",
+        degree: "Bachelor's in Computer Application",
+        period: "Jul 2024 - Expected Jul 2027",
+        logo: "/education/amity-university-patna-logo.png",
+        description:
+            "BCA degree focusing on Computer Applications, Software Development, and IT fundamentals.",
+    },
+    {
+        institution: "Bihar School Examination Board (BSEB)",
+        degree: "Senior Secondary Education",
+        period: "Aug 2022 - Jun 2024",
+        logo: "/education/bihar-school-examination-board-logo.png",
+        description:
+            "Grades 11-12 in Science Stream (PCM - Physics, Chemistry, Mathematics).",
+    },
+    {
+        institution: "Central Board of Secondary Education (CBSE)",
+        degree: "Primary & Secondary Education",
+        period: "Apr 2011 - Jul 2021",
+        logo: "/education/central-board-of-secondary-education-logo.png",
+        description:
+            "Grades 1-10 with General Education covering diverse subjects.",
+    },
+];
+---
+
+<section
+    id="education"
+    aria-labelledby="education-heading"
+    class="relative py-32 overflow-hidden"
+>
+    <!-- Background -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_15%,rgba(34,211,238,0.08),transparent_70%),linear-gradient(to_bottom,transparent,rgba(34,211,238,0.04),transparent)]"></div>
+
+    <!-- Separators -->
+    <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent"></div>
+    <div class="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Heading -->
+        <div class="text-center mb-20">
+            <h2
+                id="education-heading"
+                class="text-3xl md:text-4xl font-bold neon-text"
+            >
+                Education
+            </h2>
+            <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+                My academic journey and qualifications in Computer Science and
+                Information Technology.
+            </p>
+        </div>
+
+        <!-- Cards -->
+        <div class="space-y-8">
+            {EDUCATION.map((edu, index) => (
+                <div
+                    class="group relative p-8 rounded-xl border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-300 hover:bg-black/50 hover:border-cyan-400/30 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)]"
+                >
+                    <!-- Hover overlay -->
+                    <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-r from-cyan-500/5 to-transparent"></div>
+
+                    <div class="flex flex-col md:flex-row gap-8 items-start md:items-center relative">
+                        <!-- Logo -->
+                        <div class="shrink-0">
+                            <div class="relative w-24 h-24 md:w-28 md:h-28">
+                                <div class="absolute inset-0 rounded-lg bg-cyan-400/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <img
+                                    src={edu.logo}
+                                    alt={`${edu.institution} logo`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="relative w-full h-full object-contain rounded-lg p-3 bg-black/60 border border-white/5 transition-all duration-300 group-hover:border-cyan-400/20 group-hover:scale-110"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-xl md:text-2xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-300">
+                                {edu.institution}
+                            </h3>
+
+                            <p class="text-lg text-cyan-300 font-semibold">
+                                {edu.degree}
+                            </p>
+
+                            <p class="mt-2 text-sm md:text-base text-gray-400 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                                {edu.period}
+                            </p>
+
+                            <p class="mt-3 text-sm md:text-base text-gray-400 leading-relaxed">
+                                {edu.description}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom accent -->
+                    <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"></div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
