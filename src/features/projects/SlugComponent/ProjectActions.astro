@@ -24,4 +24,11 @@ const { project } = Astro.props;
             </a>
         )
     }
+    {
+        project.data.docsURL && (
+            <a href={project.data.docsURL} target="_blank" class="border border-gray-500/50 bg-gray-500/10 hover:border-gray-500/70 px-3 py-2 rounded-md text-gray-400 hover:text-gray-300 transition-colors duration-200">
+                Visit Docs
+            </a>
+        )
+    }
 </div>
