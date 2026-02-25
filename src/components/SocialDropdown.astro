@@ -1,0 +1,145 @@
+---
+interface Props {
+    variant?: "desktop" | "mobile";
+}
+
+const { variant = "desktop" } = Astro.props;
+
+const SOCIAL_LINKS = [
+    { icon: "fa-github", href: "https://github.com/krsahil8825", label: "GitHub" },
+    { icon: "fa-linkedin", href: "https://linkedin.com/in/krsahil8825", label: "LinkedIn" },
+    { icon: "fa-instagram", href: "https://instagram.com/krsahil8825", label: "Instagram" },
+    { icon: "fa-hashnode", href: "https://hashnode.com/@krsahil8825", label: "Hashnode" },
+    { icon: "fa-x-twitter", href: "https://x.com/krsahil8825", label: "X" },
+];
+---
+
+{
+    variant === "desktop" ? (
+        <div class="hidden md:block relative" data-social-dropdown>
+            <button
+                type="button"
+                class="social-dropdown-btn flex items-center gap-2 text-white/80 hover:text-cyan-400 transition"
+                aria-expanded="false"
+                aria-haspopup="menu"
+            >
+                <i class="fa-solid fa-users" />
+                <span class="text-xs">▼</span>
+            </button>
+
+            <div class="social-dropdown-menu hidden absolute right-0 mt-3 w-52 bg-black/95 border border-white/10 rounded-lg shadow-lg">
+                <ul class="py-2 text-sm text-white/90 max-h-60 overflow-y-auto" role="menu">
+                    {SOCIAL_LINKS.map((social) => (
+                        <li>
+                            <a
+                                href={social.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center gap-2 px-4 py-2 hover:bg-white/5 hover:text-cyan-400 transition"
+                                role="menuitem"
+                            >
+                                <i class={`fa-brands ${social.icon}`} />
+                                {social.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    ) : (
+        <div class="md:hidden" data-social-dropdown>
+            <button
+                type="button"
+                class="social-dropdown-btn w-full flex items-center justify-between px-3 py-2 text-white/90 hover:bg-white/5 rounded-md"
+                aria-expanded="false"
+                aria-haspopup="menu"
+            >
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-users" />
+                    Social
+                </span>
+                <span class="text-xs">▼</span>
+            </button>
+
+            <ul class="social-dropdown-menu hidden mt-2 ml-4 space-y-1 max-h-60 overflow-y-auto" role="menu">
+                {SOCIAL_LINKS.map((social) => (
+                    <li>
+                        <a
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/5 hover:text-cyan-400 transition"
+                            role="menuitem"
+                        >
+                            <i class={`fa-brands ${social.icon}`} />
+                            {social.label}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+<script>
+    const initializeSocialDropdowns = () => {
+        const dropdowns = document.querySelectorAll<HTMLElement>("[data-social-dropdown]");
+
+        const closeAll = (except: HTMLElement | null) => {
+            dropdowns.forEach((dropdown) => {
+                if (dropdown === except) return;
+
+                const button = dropdown.querySelector(".social-dropdown-btn");
+                const menu = dropdown.querySelector(".social-dropdown-menu");
+
+                menu?.classList.add("hidden");
+                button?.setAttribute("aria-expanded", "false");
+            });
+        };
+
+        dropdowns.forEach((dropdown) => {
+            if (dropdown.dataset.initialized === "true") return;
+
+            const button = dropdown.querySelector(".social-dropdown-btn");
+            const menu = dropdown.querySelector(".social-dropdown-menu");
+
+            if (!button || !menu) return;
+
+            dropdown.dataset.initialized = "true";
+
+            button.addEventListener("click", (event) => {
+                event.stopPropagation();
+                const isOpen = !menu.classList.contains("hidden");
+
+                closeAll(dropdown);
+                menu.classList.toggle("hidden", isOpen);
+                button.setAttribute("aria-expanded", String(!isOpen));
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+
+            dropdowns.forEach((dropdown) => {
+                if (dropdown.contains(target)) return;
+
+                const button = dropdown.querySelector(".social-dropdown-btn");
+                const menu = dropdown.querySelector(".social-dropdown-menu");
+
+                menu?.classList.add("hidden");
+                button?.setAttribute("aria-expanded", "false");
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+            closeAll(null);
+        });
+    };
+
+    if (document.body.dataset.socialDropdownsReady !== "true") {
+        document.body.dataset.socialDropdownsReady = "true";
+        initializeSocialDropdowns();
+    }
+</script>

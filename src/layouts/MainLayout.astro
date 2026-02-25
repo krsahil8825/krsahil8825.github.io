@@ -5,9 +5,12 @@ import "../styles/global.css";
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth scrollbar overflow-x-hidden">
+<html lang="en" class="scroll-smooth scrollbar overflow-x-hidden ">
     <slot name="head" />
-    <body class="antialiased min-h-screen flex flex-col justify-between bg-white text-black dark:bg-black dark:text-white transition-colors duration-500" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <body
+        class="antialiased min-h-screen flex flex-col justify-between bg-white text-black dark:bg-black dark:text-white transition-colors duration-500"
+    >
         <Navbar />
         <main class="mt-17">
             <slot name="main" />
