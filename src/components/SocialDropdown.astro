@@ -6,11 +6,12 @@ interface Props {
 const { variant = "desktop" } = Astro.props;
 
 const SOCIAL_LINKS = [
-    { icon: "fa-github", href: "https://github.com/krsahil8825", label: "GitHub" },
-    { icon: "fa-linkedin", href: "https://linkedin.com/in/krsahil8825", label: "LinkedIn" },
-    { icon: "fa-instagram", href: "https://instagram.com/krsahil8825", label: "Instagram" },
-    { icon: "fa-hashnode", href: "https://hashnode.com/@krsahil8825", label: "Hashnode" },
-    { icon: "fa-x-twitter", href: "https://x.com/krsahil8825", label: "X" },
+    { icon: "/icons/github.svg", href: "https://github.com/krsahil8825", label: "GitHub" },
+    { icon: "/icons/linkedin.svg", href: "https://linkedin.com/in/krsahil8825", label: "LinkedIn" },
+    { icon: "/icons/leetcode.svg", href: "https://leetcode.com/krsahil8825", label: "LeetCode" },
+    { icon: "/icons/Instagram.svg", href: "https://instagram.com/krsahil8825", label: "Instagram" },
+    { icon: "/icons/hashnode.svg", href: "https://hashnode.com/@krsahil8825", label: "Hashnode" },
+    { icon: "/icons/twitter-x.svg", href: "https://x.com/krsahil8825", label: "X" },
 ];
 ---
 
@@ -29,7 +30,7 @@ const SOCIAL_LINKS = [
 
             <div class="social-dropdown-menu hidden absolute right-0 mt-3 w-52 bg-black/95 border border-white/10 rounded-lg shadow-lg">
                 <ul class="py-2 text-sm text-white/90 max-h-60 overflow-y-auto" role="menu">
-                    {SOCIAL_LINKS.map((social) => (
+                    {SOCIAL_LINKS.sort((a, b) => a.label.localeCompare(b.label)).map((social) => (
                         <li>
                             <a
                                 href={social.href}
@@ -38,7 +39,11 @@ const SOCIAL_LINKS = [
                                 class="flex items-center gap-2 px-4 py-2 hover:bg-white/5 hover:text-cyan-400 transition"
                                 role="menuitem"
                             >
-                                <i class={`fa-brands ${social.icon}`} />
+                                <img
+                                    src={social.icon}
+                                    alt={`${social.label} icon`}
+                                    class="w-4 h-4 border rounded-full bg-white"
+                                />
                                 {social.label}
                             </a>
                         </li>
@@ -62,7 +67,7 @@ const SOCIAL_LINKS = [
             </button>
 
             <ul class="social-dropdown-menu hidden mt-2 ml-4 space-y-1 max-h-60 overflow-y-auto" role="menu">
-                {SOCIAL_LINKS.map((social) => (
+                {SOCIAL_LINKS.sort((a, b) => a.label.localeCompare(b.label)).map((social) => (
                     <li>
                         <a
                             href={social.href}
@@ -71,7 +76,7 @@ const SOCIAL_LINKS = [
                             class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/5 hover:text-cyan-400 transition"
                             role="menuitem"
                         >
-                            <i class={`fa-brands ${social.icon}`} />
+                            <img src={social.icon} alt={`${social.label} icon`} class="w-4 h-4 border rounded-full bg-white" />
                             {social.label}
                         </a>
                     </li>
