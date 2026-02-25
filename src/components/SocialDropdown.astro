@@ -6,18 +6,24 @@ interface Props {
 const { variant = "desktop" } = Astro.props;
 
 const SOCIAL_LINKS = [
+    { icon: "/icons/discord.svg", href: "https://discord.com/users/krsahil8825", label: "Discord" },
+    { icon: "/icons/daily.dev.svg", href: "https://app.daily.dev/krsahil8825", label: "daily.dev" },
+    { icon: "/icons/email.svg", href: "mailto:krsahil8825@gmail.com", label: "Email" },
     { icon: "/icons/github.svg", href: "https://github.com/krsahil8825", label: "GitHub" },
-    { icon: "/icons/linkedin.svg", href: "https://linkedin.com/in/krsahil8825", label: "LinkedIn" },
-    { icon: "/icons/leetcode.svg", href: "https://leetcode.com/krsahil8825", label: "LeetCode" },
-    { icon: "/icons/Instagram.svg", href: "https://instagram.com/krsahil8825", label: "Instagram" },
     { icon: "/icons/hashnode.svg", href: "https://hashnode.com/@krsahil8825", label: "Hashnode" },
+    { icon: "/icons/Instagram.svg", href: "https://instagram.com/krsahil8825", label: "Instagram" },
+    { icon: "/icons/leetcode.svg", href: "https://leetcode.com/krsahil8825", label: "LeetCode" },
+    { icon: "/icons/linkedin.svg", href: "https://linkedin.com/in/krsahil8825", label: "LinkedIn" },
+    { icon: "/icons/reddit.svg", href: "https://reddit.com/user/krsahil8825", label: "Reddit" },
+    { icon: "/icons/medium.svg", href: "https://krsahil8825.medium.com", label: "Medium" },
     { icon: "/icons/twitter-x.svg", href: "https://x.com/krsahil8825", label: "X" },
+    { icon: "/icons/youtube.svg", href: "https://youtube.com/@krsahil8825", label: "YouTube" },
 ];
 ---
 
 {
     variant === "desktop" ? (
-        <div class="hidden md:block relative" data-social-dropdown>
+        <div class="hidden lg:block relative" data-social-dropdown>
             <button
                 type="button"
                 class="social-dropdown-btn flex items-center gap-2 text-white/80 hover:text-cyan-400 transition"
@@ -29,7 +35,7 @@ const SOCIAL_LINKS = [
             </button>
 
             <div class="social-dropdown-menu hidden absolute right-0 mt-3 w-52 bg-black/95 border border-white/10 rounded-lg shadow-lg">
-                <ul class="py-2 text-sm text-white/90 max-h-60 overflow-y-auto" role="menu">
+                <ul class="scrollbar py-2 text-sm text-white/90 max-h-60 overflow-y-auto" role="menu">
                     {SOCIAL_LINKS.sort((a, b) => a.label.localeCompare(b.label)).map((social) => (
                         <li>
                             <a
@@ -52,7 +58,7 @@ const SOCIAL_LINKS = [
             </div>
         </div>
     ) : (
-        <div class="md:hidden" data-social-dropdown>
+        <div class="lg:hidden" data-social-dropdown>
             <button
                 type="button"
                 class="social-dropdown-btn w-full flex items-center justify-between px-3 py-2 text-white/90 hover:bg-white/5 rounded-md"
@@ -66,7 +72,7 @@ const SOCIAL_LINKS = [
                 <span class="text-xs">▼</span>
             </button>
 
-            <ul class="social-dropdown-menu hidden mt-2 ml-4 space-y-1 max-h-60 overflow-y-auto" role="menu">
+            <ul class="social-dropdown-menu scrollbar hidden mt-2 ml-4 space-y-1 max-h-60 overflow-y-auto" role="menu">
                 {SOCIAL_LINKS.sort((a, b) => a.label.localeCompare(b.label)).map((social) => (
                     <li>
                         <a
