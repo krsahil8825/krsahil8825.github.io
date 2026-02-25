@@ -1,11 +1,11 @@
 ---
-title: "Network - Social Media Platform"
-description: "This article explores the key technology choices behind my Django-based social media platform. I discuss how Django’s built-in security and rapid development features shaped the project, why Render was selected for free live deployment with automated CI/CD, and how MySQL provided an efficient production database solution under server constraints."
+title: "How I Built 'Network - Social Media Platform'"
+description: "Discover the design and development process behind 'Network,' a production-ready social media platform built with Django. Learn about the architecture, security measures, and user experience considerations that went into creating this scalable web application."
 keywords: ["django", "social media", "web development", "python", "network", "mysql", "render", "deployment", "tech stack", "database", "blog"]
 imagePath: "/posts/blogs/network-social-media-platform.jpg"
 tags: ["django", "web development", "python"]
 publishedTime: "2026-02-04"
-modifiedTime: "2026-02-07"
+modifiedTime: "2026-02-25"
 ---
 
 # Building a Production-Ready Social Media Platform with Django
