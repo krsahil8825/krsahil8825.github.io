@@ -5,59 +5,46 @@ import "../../styles/markdown.css";
 import SEO from "../../components/SEO.astro";
 import BlogArticle from "../../features/blogs/SlugComponent/BlogArticle.astro";
 
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getAdjacentSlugs } from "../../config/content";
+import { getBlogSlugStaticPaths } from "../../config/page-paths";
+import { getBlogArticleSEO } from "../../config/page-seo";
 
 export async function getStaticPaths() {
-    const blogs = await getCollection("blogs");
-
-    blogs.sort((a, b) => new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime());
-
-    return blogs.map((blog, index) => ({
-        params: { slug: blog.slug },
-        props: {
-            blog,
-            index,
-            total: blogs.length,
-            slugs: blogs.map((b) => b.slug),
-        },
-    }));
+    return getBlogSlugStaticPaths();
 }
 
-const { blog, index, total, slugs } = Astro.props;
+interface BlogSlugPageProps {
+    blog: CollectionEntry<"blogs">;
+    index: number;
+    total: number;
+    slugs: string[];
+}
 
-const prevSlug = index > 0 ? slugs[index - 1] : null;
-const nextSlug = index < total - 1 ? slugs[index + 1] : null;
+const { blog, index, total, slugs } = Astro.props as unknown as BlogSlugPageProps;
+
+const { prevSlug, nextSlug } = getAdjacentSlugs(index, total, slugs);
 
 const { Content } = await blog.render();
 
 // SEO
-const pType = "article";
-const pTitle = blog.data.title;
-const pDescription = blog.data.description;
-const pPath = "blogs";
-const pKeywords = blog.data.keywords;
-const pImagePath = blog.data.imagePath;
-const pTags = blog.data.tags;
-const pSlug = blog.slug;
-const pPublishedTime = blog.data.publishedTime;
-const pModifiedTime = blog.data.modifiedTime ?? "";
-const isIndexable = true;
+const seo = getBlogArticleSEO(blog);
 ---
 
 <MainLayout>
     <Fragment slot="head">
         <SEO
-            pType={pType}
-            pTitle={pTitle}
-            pDescription={pDescription}
-            pPath={pPath}
-            pKeywords={pKeywords}
-            pImagePath={pImagePath}
-            pTags={pTags}
-            pSlug={pSlug}
-            pPublishedTime={pPublishedTime}
-            pModifiedTime={pModifiedTime}
-            isIndexable={isIndexable}
+            pType={seo.pType}
+            pTitle={seo.pTitle}
+            pDescription={seo.pDescription}
+            pPath={seo.pPath}
+            pKeywords={seo.pKeywords}
+            pImagePath={seo.pImagePath}
+            pTags={seo.pTags}
+            pSlug={seo.pSlug}
+            pPublishedTime={seo.pPublishedTime}
+            pModifiedTime={seo.pModifiedTime}
+            isIndexable={seo.isIndexable}
         />
     </Fragment>
 

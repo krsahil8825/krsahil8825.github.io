@@ -1,5 +1,13 @@
 ---
-const { page, totalPages, basePath = "/projects/page" } = Astro.props;
+import { ROUTES } from "../../../config/routes";
+
+interface Props {
+    page: number;
+    totalPages: number;
+    basePath?: string;
+}
+
+const { page, totalPages, basePath = ROUTES.projects.listingBase } = Astro.props as Props;
 ---
 
 <nav class="mt-16 flex justify-center gap-4">

@@ -5,59 +5,46 @@ import "../../styles/markdown.css";
 import SEO from "../../components/SEO.astro";
 import ProjectArticle from "../../features/projects/SlugComponent/ProjectArticle.astro";
 
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getAdjacentSlugs } from "../../config/content";
+import { getProjectSlugStaticPaths } from "../../config/page-paths";
+import { getProjectArticleSEO } from "../../config/page-seo";
 
 export async function getStaticPaths() {
-    const projects = await getCollection("projects");
-
-    projects.sort((a, b) => new Date(b.data.publishedTime).getTime() - new Date(a.data.publishedTime).getTime());
-
-    return projects.map((project, index) => ({
-        params: { slug: project.slug },
-        props: {
-            project,
-            index,
-            total: projects.length,
-            slugs: projects.map((p) => p.slug),
-        },
-    }));
+    return getProjectSlugStaticPaths();
 }
 
-const { project, index, total, slugs } = Astro.props;
+interface ProjectSlugPageProps {
+    project: CollectionEntry<"projects">;
+    index: number;
+    total: number;
+    slugs: string[];
+}
 
-const prevSlug = index > 0 ? slugs[index - 1] : null;
-const nextSlug = index < total - 1 ? slugs[index + 1] : null;
+const { project, index, total, slugs } = Astro.props as unknown as ProjectSlugPageProps;
+
+const { prevSlug, nextSlug } = getAdjacentSlugs(index, total, slugs);
 
 const { Content } = await project.render();
 
 // SEO
-const pType = "article";
-const pTitle = project.data.title;
-const pDescription = project.data.description;
-const pPath = "projects";
-const pKeywords = project.data.keywords;
-const pImagePath = project.data.imagePath;
-const pTags = project.data.tags;
-const pSlug = project.slug;
-const pPublishedTime = project.data.publishedTime;
-const pModifiedTime = project.data.modifiedTime ?? "";
-const isIndexable = true;
+const seo = getProjectArticleSEO(project);
 ---
 
 <MainLayout>
     <Fragment slot="head">
         <SEO
-            pType={pType}
-            pTitle={pTitle}
-            pDescription={pDescription}
-            pPath={pPath}
-            pKeywords={pKeywords}
-            pImagePath={pImagePath}
-            pTags={pTags}
-            pSlug={pSlug}
-            pPublishedTime={pPublishedTime}
-            pModifiedTime={pModifiedTime}
-            isIndexable={isIndexable}
+            pType={seo.pType}
+            pTitle={seo.pTitle}
+            pDescription={seo.pDescription}
+            pPath={seo.pPath}
+            pKeywords={seo.pKeywords}
+            pImagePath={seo.pImagePath}
+            pTags={seo.pTags}
+            pSlug={seo.pSlug}
+            pPublishedTime={seo.pPublishedTime}
+            pModifiedTime={seo.pModifiedTime}
+            isIndexable={seo.isIndexable}
         />
     </Fragment>
 

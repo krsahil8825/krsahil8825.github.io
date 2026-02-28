@@ -1,5 +1,6 @@
 ---
 import { SITE } from "../config/site";
+import { createStructuredData, resolveSEO, type SEOProps } from "../config/seo";
 
 const {
     pType = "website", // "article" or "website"
@@ -15,115 +16,40 @@ const {
     isIndexable = true, // whether the page should be indexable by search engines
 } = Astro.props;
 
-interface Props {
-    pType?: "article" | "website";
-    pTitle?: string;
-    pDescription?: string;
-    pPath?: string;
-    pKeywords?: string[];
-    pImagePath?: string;
-    pTags?: string[];
-    pSlug?: string;
-    pPublishedTime?: string;
-    pModifiedTime?: string;
-    isIndexable?: boolean;
-}
+interface Props extends SEOProps {}
 
 /// META TAG VALUES COMPUTATION
 
-// this check is to ensure that only "article" or "website" is used as type
-// here article type is used for blog posts or articles or projects pages
-const metaType = pType === "article" ? pType : "website"; // default to "website" if not "article"
+const resolved = resolveSEO({
+    pType,
+    pTitle,
+    pDescription,
+    pPath,
+    pKeywords,
+    pImagePath,
+    pTags,
+    pSlug,
+    pPublishedTime,
+    pModifiedTime,
+    isIndexable,
+});
 
-const isArticle = metaType === "article" ? true : false;
-
-const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` : `${SITE.fullName} | ${SITE.role}`;
-
-const metaDescription = pDescription ? pDescription : SITE.description;
-
-const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : pPath ? `${SITE.url}/${pPath}` : SITE.url;
-
-const metaKeywords = Array.from(new Set([...SITE.keywords, ...(pKeywords ? pKeywords : []), ...(pTags ? pTags : [])])).join(", ");
-
-const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
-
-const indexable = isIndexable;
+const { metaType, isArticle, metaTitle, metaDescription, metaURL, metaKeywords, metaImage, indexable } = resolved;
 
 /// STRUCTURED DATA GENERATION
 
-// Structured Data - JSON-LD for Entity SEO
-const baseGraph = [
+const structuredData = createStructuredData(
     {
-        "@type": "WebSite",
-        "@id": `${SITE.url}#website`,
-        url: SITE.url,
-        name: SITE.fullName,
-        publisher: {
-            "@id": `${SITE.url}#person`,
-        },
+        pType,
+        pTitle,
+        pDescription,
+        pPath,
+        pImagePath,
+        pPublishedTime,
+        pModifiedTime,
     },
-    {
-        "@type": "Person",
-        "@id": `${SITE.url}#person`,
-        name: "Kumar Sahil",
-        alternateName: [
-            "Sahil",
-            "Sahil Kumar",
-            "Kumar Sahil",
-            "Kr Sahil",
-            "KrSahil",
-            "krsahil8825",
-            "Kumar Sahil Developer",
-            "Sahil Developer",
-        ],
-        url: SITE.url,
-        image: `${SITE.url}${SITE.profilePic}`,
-        jobTitle: SITE.role,
-        description: SITE.description,
-        knowsAbout: [
-            "Python",
-            "Java",
-            "Django",
-            "Flask",
-            "SQL",
-            "Backend Development",
-            "REST APIs",
-            "Data Structures",
-            "Algorithms",
-            "Web Development",
-        ],
-        sameAs: [SITE.social.github.url, SITE.social.linkedin.url, SITE.social.twitter.url, SITE.social.instagram.url],
-    },
-];
-
-// ArticleGraph structured data for articles
-const ArticleGraph =
-    isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
-        ? {
-              "@type": "Article",
-              "@id": `${metaURL}#article`,
-              mainEntityOfPage: {
-                  "@type": "WebPage",
-                  "@id": metaURL,
-              },
-              headline: metaTitle,
-              description: metaDescription,
-              image: metaImage,
-              datePublished: pPublishedTime,
-              dateModified: pModifiedTime || pPublishedTime,
-              author: {
-                  "@id": `${SITE.url}#person`,
-              },
-              publisher: {
-                  "@id": `${SITE.url}#website`,
-              },
-          }
-        : null;
-
-const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": ArticleGraph ? [...baseGraph, ArticleGraph] : baseGraph,
-};
+    resolved,
+);
 ---
 
 <head>
