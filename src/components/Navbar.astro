@@ -1,21 +1,16 @@
 ---
 import { SITE } from "../config/site";
+import { NAV_LINKS } from "../config/nav";
 import SocialDropdown from "./SocialDropdown.astro";
-
-const NAV_LINKS = [
-    { label: "Home", href: "/#home" },
-    { label: "About", href: "/#about" },
-    { label: "Skills", href: "/#skills" },
-    { label: "Projects", href: "/projects/page/1" },
-    { label: "Blogs", href: "/blogs/page/1" },
-    { label: "Contact", href: "/#contact" },
-];
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 overflow-x-clip backdrop-blur-md bg-black/70 border-b border-white/10">
     <nav class="mx-auto max-w-7xl min-w-0 flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
         <!-- Brand -->
-        <a href="/" class="max-w-[55vw] sm:max-w-none truncate text-lg font-semibold tracking-tight text-white hover:text-cyan-400 transition">
+        <a
+            href="/"
+            class="max-w-[55vw] sm:max-w-none truncate text-lg font-semibold tracking-tight text-white hover:text-cyan-400 transition"
+        >
             {SITE.name}
         </a>
 

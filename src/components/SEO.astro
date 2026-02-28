@@ -34,7 +34,8 @@ const resolved = resolveSEO({
     isIndexable,
 });
 
-const { metaType, isArticle, metaTitle, metaDescription, metaURL, metaKeywords, metaImage, metaImageMimeType, indexable } = resolved;
+const { metaType, isArticle, metaTitle, metaDescription, metaURL, metaKeywords, metaImage, metaImageMimeType, indexable } =
+    resolved;
 
 /// STRUCTURED DATA GENERATION
 
@@ -79,8 +80,8 @@ const structuredData = createStructuredData(
     {
         indexable ? (
             <>
-                <meta name="robots" content="index, follow" />
-                <meta name="googlebot" content="index, follow" />
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
             </>
         ) : (
             <>

@@ -2,31 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://krsahil.co.in/</loc>
-    <image:image><image:loc>https://krsahil.co.in/site/profile.webp</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/404.svg</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/favicon-16x16.png</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/favicon-180x180.png</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/favicon-192x192.png</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/favicon-32x32.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/site/favicon.png</image:loc></image:image>
-  </url>
-
-  <url>
-    <loc>https://krsahil.co.in/blogs/page/1</loc>
-    <image:image><image:loc>https://krsahil.co.in/posts/blogs/network-social-media-platform.jpg</image:loc></image:image>
-    <image:image><image:loc>https://krsahil.co.in/posts/blogs/portfolio-website.png</image:loc></image:image>
-    <image:image><image:loc>https://krsahil.co.in/posts/blogs/url-content-type-detector.jpg</image:loc></image:image>
-  </url>
-
-  <url>
-    <loc>https://krsahil.co.in/projects/page/1</loc>
-    <image:image><image:loc>https://krsahil.co.in/posts/projects/network-social-media-platform.jpg</image:loc></image:image>
-    <image:image><image:loc>https://krsahil.co.in/posts/projects/portfolio-website.png</image:loc></image:image>
-    <image:image><image:loc>https://krsahil.co.in/posts/projects/url-content-type-detector.jpg</image:loc></image:image>
-  </url>
-
-  <url>
-    <loc>https://krsahil.co.in/</loc>
+    <image:image><image:loc>https://krsahil.co.in/site/favicon.svg</image:loc></image:image>
+    <image:image><image:loc>https://krsahil.co.in/site/profile.webp</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/amity-university-patna-logo.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/bihar-school-examination-board-logo.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/central-board-of-secondary-education-logo.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/freecodecamp-logo.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/harvard-university-logo.png</image:loc></image:image>
     <image:image><image:loc>https://krsahil.co.in/education/iit-kharagpur-logo.png</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/blogs/advantages-of-url-content-type-detector</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/blogs/url-content-type-detector.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/blogs/how-i-built-network-social-media-platform</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/blogs/network-social-media-platform.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/blogs/why-i-chose-astro-for-my-portfolio-website</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/blogs/portfolio-website.png</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/projects/network-social-media-platform</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/projects/network-social-media-platform.jpg</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/projects/portfolio-website</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/projects/portfolio-website.png</image:loc></image:image>
+  </url>
+
+  <url>
+    <loc>https://krsahil.co.in/projects/url-content-type-detector</loc>
+    <image:image><image:loc>https://krsahil.co.in/posts/projects/url-content-type-detector.jpg</image:loc></image:image>
   </url>
 </urlset>

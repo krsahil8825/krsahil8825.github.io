@@ -133,26 +133,26 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
     const breadcrumbGraph =
         pathSegments.length > 0
             ? {
-                  "@type": "BreadcrumbList",
-                  "@id": `${resolved.metaURL}#breadcrumb`,
-                  itemListElement: [
-                      {
-                          "@type": "ListItem",
-                          position: 1,
-                          name: "Home",
-                          item: SITE.url,
-                      },
-                      ...pathSegments.map((segment, index) => ({
-                          "@type": "ListItem",
-                          position: index + 2,
-                          name: segment
-                              .split("-")
-                              .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
-                              .join(" "),
-                          item: `${SITE.url}/${pathSegments.slice(0, index + 1).join("/")}`,
-                      })),
-                  ],
-              }
+                "@type": "BreadcrumbList",
+                "@id": `${resolved.metaURL}#breadcrumb`,
+                itemListElement: [
+                    {
+                        "@type": "ListItem",
+                        position: 1,
+                        name: "Home",
+                        item: SITE.url,
+                    },
+                    ...pathSegments.map((segment, index) => ({
+                        "@type": "ListItem",
+                        position: index + 2,
+                        name: segment
+                            .split("-")
+                            .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+                            .join(" "),
+                        item: `${SITE.url}/${pathSegments.slice(0, index + 1).join("/")}`,
+                    })),
+                ],
+            }
             : null;
 
     const webPageGraph = {
@@ -182,26 +182,26 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
     const articleGraph =
         resolved.isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
             ? {
-                  "@type": "Article",
-                  "@id": `${resolved.metaURL}#article`,
-                  mainEntityOfPage: {
-                      "@id": `${resolved.metaURL}#webpage`,
-                  },
-                  headline: resolved.metaTitle,
-                  description: resolved.metaDescription,
-                  image: {
-                      "@id": `${resolved.metaURL}#primaryimage`,
-                  },
-                  datePublished: pPublishedTime,
-                  dateModified: pModifiedTime || pPublishedTime,
-                  keywords: pTags.join(", "),
-                  author: {
-                      "@id": `${SITE.url}#person`,
-                  },
-                  publisher: {
-                      "@id": `${SITE.url}#website`,
-                  },
-              }
+                "@type": "Article",
+                "@id": `${resolved.metaURL}#article`,
+                mainEntityOfPage: {
+                    "@id": `${resolved.metaURL}#webpage`,
+                },
+                headline: resolved.metaTitle,
+                description: resolved.metaDescription,
+                image: {
+                    "@id": `${resolved.metaURL}#primaryimage`,
+                },
+                datePublished: pPublishedTime,
+                dateModified: pModifiedTime || pPublishedTime,
+                keywords: pTags.join(", "),
+                author: {
+                    "@id": `${SITE.url}#person`,
+                },
+                publisher: {
+                    "@id": `${SITE.url}#website`,
+                },
+            }
             : null;
 
     return {
