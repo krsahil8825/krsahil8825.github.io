@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "krsahil88.github.io",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -13,6 +13,8 @@
     "@astrojs/sitemap": "^3.6.0",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
+    "globby": "^16.1.1",
+    "sitemap": "^9.0.1",
     "tailwindcss": "^4.1.18"
   }
 }

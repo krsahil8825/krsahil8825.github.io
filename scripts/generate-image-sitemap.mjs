@@ -1,5 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+import { globby } from "globby";
+import { SitemapStream, streamToPromise } from "sitemap";
+import { createWriteStream } from "node:fs";
+import { Readable } from "node:stream";
 
 const ROOT = process.cwd();
 const SITE_URL = "https://krsahil.co.in";
@@ -8,22 +12,12 @@ const PATHS = {
     output: path.join(ROOT, "public", "image-sitemap.xml"),
     blogsContent: path.join(ROOT, "src", "content", "blogs"),
     projectsContent: path.join(ROOT, "src", "content", "projects"),
-    siteAssets: path.join(ROOT, "public", "site"),
-    educationAssets: path.join(ROOT, "public", "education"),
 };
 
-const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".avif"]);
+// Only raster images (NO SVG)
+const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"]);
 
-function listImagesInDirectory(directoryPath) {
-    if (!fs.existsSync(directoryPath)) return [];
-
-    return fs
-        .readdirSync(directoryPath)
-        .map((name) => path.join(directoryPath, name))
-        .filter((fullPath) => fs.statSync(fullPath).isFile())
-        .filter((fullPath) => IMAGE_EXTENSIONS.has(path.extname(fullPath).toLowerCase()))
-        .map((fullPath) => `/${path.relative(path.join(ROOT, "public"), fullPath).replace(/\\/g, "/")}`);
-}
+// Extract imagePath from Markdown frontmatter
 
 function extractImagePathFromMarkdown(markdownContent) {
     const imagePathMatch = markdownContent.match(/^imagePath:\s*["']?([^"'\n]+)["']?\s*$/m);
@@ -40,49 +34,86 @@ function extractContentImages(contentDir, baseRoute) {
             const filePath = path.join(contentDir, fileName);
             const slug = fileName.replace(/\.md$/, "");
             const markdown = fs.readFileSync(filePath, "utf-8");
-            const imagePath = extractImagePathFromMarkdown(markdown);
 
+            const imagePath = extractImagePathFromMarkdown(markdown);
             if (!imagePath) return null;
 
+            if (path.extname(imagePath).toLowerCase() === ".svg") return null;
+
             return {
-                loc: `${SITE_URL}/${baseRoute}/${slug}`,
-                images: [imagePath.startsWith("/") ? imagePath : `/${imagePath}`],
+                url: `/${baseRoute}/${slug}`,
+                img: [
+                    {
+                        url: imagePath.startsWith("/") ? imagePath : `/${imagePath}`,
+                    },
+                ],
             };
         })
         .filter(Boolean);
 }
 
-function unique(values) {
-    return [...new Set(values)];
+// Get ALL static raster images from public/
+
+async function getStaticImages() {
+    const files = await globby(["public/**/*.{png,jpg,jpeg,webp,avif,gif}", "!public/**/*.svg"]);
+
+    return files.map((file) => {
+        const urlPath = "/" + path.relative(path.join(ROOT, "public"), file).replace(/\\/g, "/");
+
+        return {
+            url: "/", // associate static images with homepage
+            img: [{ url: urlPath }],
+        };
+    });
 }
 
-function buildImageSitemapXml(entries) {
-    const xmlEntries = entries
-        .map((entry) => {
-            const imageTags = entry.images
-                .map((imagePath) => `    <image:image><image:loc>${SITE_URL}${imagePath}</image:loc></image:image>`)
-                .join("\n");
+// Merge + Remove Duplicates
 
-            return `  <url>\n    <loc>${entry.loc}</loc>\n${imageTags}\n  </url>`;
-        })
-        .join("\n\n");
+function deduplicateEntries(entries) {
+    const map = new Map();
 
-    return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${xmlEntries}\n</urlset>\n`;
+    for (const entry of entries) {
+        if (!map.has(entry.url)) {
+            map.set(entry.url, new Set());
+        }
+
+        entry.img.forEach((image) => {
+            map.get(entry.url).add(image.url);
+        });
+    }
+
+    return Array.from(map.entries()).map(([url, images]) => ({
+        url,
+        img: Array.from(images).map((url) => ({ url })),
+    }));
 }
 
-const homeImages = unique([...listImagesInDirectory(PATHS.siteAssets), ...listImagesInDirectory(PATHS.educationAssets)]);
+// Generate Image Sitemap
 
-const entries = [
-    {
-        loc: `${SITE_URL}/`,
-        images: homeImages,
-    },
-    ...extractContentImages(PATHS.blogsContent, "blogs"),
-    ...extractContentImages(PATHS.projectsContent, "projects"),
-];
+async function generateImageSitemap() {
+    const staticImages = await getStaticImages();
 
-const filteredEntries = entries.filter((entry) => entry.images.length > 0);
-const xml = buildImageSitemapXml(filteredEntries);
+    const contentImages = [
+        ...extractContentImages(PATHS.blogsContent, "blogs"),
+        ...extractContentImages(PATHS.projectsContent, "projects"),
+    ];
 
-fs.writeFileSync(PATHS.output, xml, "utf-8");
-console.log(`Generated image sitemap with ${filteredEntries.length} URL entries at public/image-sitemap.xml`);
+    const merged = deduplicateEntries([...staticImages, ...contentImages]);
+
+    const stream = new SitemapStream({
+        hostname: SITE_URL,
+        xmlns: {
+            image: true,
+        },
+    });
+
+    const writeStream = createWriteStream(PATHS.output);
+
+    Readable.from(merged).pipe(stream).pipe(writeStream);
+
+    await streamToPromise(stream);
+
+    console.log(`Generated image sitemap with ${merged.length} URL entries`);
+}
+
+generateImageSitemap();
