@@ -34,7 +34,7 @@ const resolved = resolveSEO({
     isIndexable,
 });
 
-const { metaType, isArticle, metaTitle, metaDescription, metaURL, metaKeywords, metaImage, indexable } = resolved;
+const { metaType, isArticle, metaTitle, metaDescription, metaURL, metaKeywords, metaImage, metaImageMimeType, indexable } = resolved;
 
 /// STRUCTURED DATA GENERATION
 
@@ -65,8 +65,14 @@ const structuredData = createStructuredData(
 
     <meta name="author" content={SITE.fullName} />
     <link rel="canonical" href={metaURL} />
+    <link rel="alternate" hreflang={SITE.locale} href={metaURL} />
+    <link rel="alternate" hreflang="x-default" href={metaURL} />
+    <link rel="sitemap" type="application/xml" href={`${SITE.url}/sitemap-index.xml`} />
     <meta name="keywords" content={metaKeywords} />
     <meta name="language" content={SITE.locale} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="application-name" content={SITE.fullName} />
     <link rel="author" href={SITE.url} />
 
     <!-- INDEXING -->
@@ -86,6 +92,7 @@ const structuredData = createStructuredData(
 
     {isArticle && pPublishedTime ? <meta property="article:published_time" content={pPublishedTime} /> : null}
     {isArticle && pModifiedTime ? <meta property="article:modified_time" content={pModifiedTime} /> : null}
+    {isArticle && pTags?.length ? pTags.map((tag: string) => <meta property="article:tag" content={tag} />) : null}
 
     <!-- ICONS -->
     <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
@@ -107,13 +114,18 @@ const structuredData = createStructuredData(
     <meta property="og:site_name" content={SITE.fullName} />
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:image" content={metaImage} />
+    <meta property="og:image:secure_url" content={metaImage} />
+    <meta property="og:image:type" content={metaImageMimeType} />
     <meta property="og:image:alt" content={metaTitle} />
+    <meta property="og:updated_time" content={pModifiedTime || pPublishedTime || ""} />
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={metaTitle} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={metaImage} />
+    <meta name="twitter:image:alt" content={metaTitle} />
+    <meta name="twitter:site" content={`@${SITE.social.twitter.username}`} />
     <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
 
     <!-- HERE WE CAN ADD ADDITIONAL HEAD ELEMENTS THROUGH THE SLOT -->

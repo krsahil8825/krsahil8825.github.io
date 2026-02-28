@@ -22,7 +22,18 @@ export interface ResolvedSEO {
     metaURL: string;
     metaKeywords: string;
     metaImage: string;
+    metaImageMimeType: string;
     indexable: boolean;
+}
+
+function inferImageMimeType(imageUrl: string): string {
+    const normalizedUrl = imageUrl.toLowerCase();
+
+    if (normalizedUrl.endsWith(".svg")) return "image/svg+xml";
+    if (normalizedUrl.endsWith(".webp")) return "image/webp";
+    if (normalizedUrl.endsWith(".jpg") || normalizedUrl.endsWith(".jpeg")) return "image/jpeg";
+    if (normalizedUrl.endsWith(".gif")) return "image/gif";
+    return "image/png";
 }
 
 export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
@@ -45,6 +56,7 @@ export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
     const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : pPath ? `${SITE.url}/${pPath}` : SITE.url;
     const metaKeywords = Array.from(new Set([...SITE.keywords, ...pKeywords, ...pTags])).join(", ");
     const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
+    const metaImageMimeType = inferImageMimeType(metaImage);
     const indexable = isIndexable;
 
     return {
@@ -55,6 +67,7 @@ export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
         metaURL,
         metaKeywords,
         metaImage,
+        metaImageMimeType,
         indexable,
     };
 }
@@ -110,9 +123,61 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
         pDescription = "",
         pPath = "",
         pImagePath = "",
+        pTags = [],
         pPublishedTime = "",
         pModifiedTime = "",
     } = props;
+
+    const normalizedPath = pPath.replace(/^\/+|\/+$/g, "");
+    const pathSegments = normalizedPath ? normalizedPath.split("/") : [];
+    const breadcrumbGraph =
+        pathSegments.length > 0
+            ? {
+                  "@type": "BreadcrumbList",
+                  "@id": `${resolved.metaURL}#breadcrumb`,
+                  itemListElement: [
+                      {
+                          "@type": "ListItem",
+                          position: 1,
+                          name: "Home",
+                          item: SITE.url,
+                      },
+                      ...pathSegments.map((segment, index) => ({
+                          "@type": "ListItem",
+                          position: index + 2,
+                          name: segment
+                              .split("-")
+                              .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+                              .join(" "),
+                          item: `${SITE.url}/${pathSegments.slice(0, index + 1).join("/")}`,
+                      })),
+                  ],
+              }
+            : null;
+
+    const webPageGraph = {
+        "@type": "WebPage",
+        "@id": `${resolved.metaURL}#webpage`,
+        url: resolved.metaURL,
+        name: resolved.metaTitle,
+        description: resolved.metaDescription,
+        inLanguage: SITE.locale,
+        isPartOf: {
+            "@id": `${SITE.url}#website`,
+        },
+        primaryImageOfPage: {
+            "@id": `${resolved.metaURL}#primaryimage`,
+        },
+    };
+
+    const imageObjectGraph = {
+        "@type": "ImageObject",
+        "@id": `${resolved.metaURL}#primaryimage`,
+        url: resolved.metaImage,
+        contentUrl: resolved.metaImage,
+        inLanguage: SITE.locale,
+        caption: resolved.metaTitle,
+    };
 
     const articleGraph =
         resolved.isArticle && pType === "article" && pTitle && pDescription && pPath && pImagePath && pPublishedTime
@@ -120,14 +185,16 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
                   "@type": "Article",
                   "@id": `${resolved.metaURL}#article`,
                   mainEntityOfPage: {
-                      "@type": "WebPage",
-                      "@id": resolved.metaURL,
+                      "@id": `${resolved.metaURL}#webpage`,
                   },
                   headline: resolved.metaTitle,
                   description: resolved.metaDescription,
-                  image: resolved.metaImage,
+                  image: {
+                      "@id": `${resolved.metaURL}#primaryimage`,
+                  },
                   datePublished: pPublishedTime,
                   dateModified: pModifiedTime || pPublishedTime,
+                  keywords: pTags.join(", "),
                   author: {
                       "@id": `${SITE.url}#person`,
                   },
@@ -139,7 +206,9 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
 
     return {
         "@context": "https://schema.org",
-        "@graph": articleGraph ? [...baseGraph, articleGraph] : baseGraph,
+        "@graph": articleGraph
+            ? [...baseGraph, webPageGraph, imageObjectGraph, ...(breadcrumbGraph ? [breadcrumbGraph] : []), articleGraph]
+            : [...baseGraph, webPageGraph, imageObjectGraph, ...(breadcrumbGraph ? [breadcrumbGraph] : [])],
     };
 }
 

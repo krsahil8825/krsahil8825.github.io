@@ -6,13 +6,15 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 import { SITE } from "./src/config/site";
+import { SITEMAP_CUSTOM_PAGES, shouldIncludeInSitemap } from "./src/config/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
     site: SITE.url,
     integrations: [
         sitemap({
-            filter: (page) => !page.includes("404"),
+            filter: shouldIncludeInSitemap,
+            customPages: SITEMAP_CUSTOM_PAGES,
         }),
     ],
     vite: {
