@@ -1,5 +1,5 @@
 ---
-import { SOCIAL_LINKS } from "../config/social";
+import { SOCIAL_LINKS, socialICONS } from "../config/social";
 
 interface Props {
     variant?: "desktop" | "mobile";
@@ -17,7 +17,7 @@ const { variant = "desktop" } = Astro.props as Props;
                 aria-expanded="false"
                 aria-haspopup="menu"
             >
-                <i class="fa-solid fa-users" />
+                <img src={socialICONS} alt="Social icon" class="w-4 h-4 border rounded-full bg-white" />
                 <span class="text-xs">▼</span>
             </button>
 
@@ -53,7 +53,7 @@ const { variant = "desktop" } = Astro.props as Props;
                 aria-haspopup="menu"
             >
                 <span class="flex items-center gap-2">
-                    <i class="fa-solid fa-users" />
+                    <img src={socialICONS} alt="Social icon" class="w-4 h-4 border rounded-full bg-white" />
                     Social
                 </span>
                 <span class="text-xs">▼</span>

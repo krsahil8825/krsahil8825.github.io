@@ -4,6 +4,8 @@ export interface SocialLink {
     label: string;
 }
 
+export const socialICONS = "/icons/social.svg";
+
 export const SOCIAL_LINKS: SocialLink[] = [
     { icon: "/icons/discord.svg", href: "https://discord.com/users/krsahil8825", label: "Discord" },
     { icon: "/icons/daily.dev.svg", href: "https://app.daily.dev/krsahil8825", label: "daily.dev" },
