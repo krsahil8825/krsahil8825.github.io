@@ -9,6 +9,7 @@ export const socialICONS = "/icons/social.svg";
 export const SOCIAL_LINKS: SocialLink[] = [
     { icon: "/icons/discord.svg", href: "https://discord.com/users/krsahil8825", label: "Discord" },
     { icon: "/icons/daily.dev.svg", href: "https://app.daily.dev/krsahil8825", label: "daily.dev" },
+    { icon: "/icons/dev.to.svg", href: "https://dev.to/krsahil8825", label: "Dev.to" },
     { icon: "/icons/email.svg", href: "mailto:krsahil8825@gmail.com", label: "Email" },
     { icon: "/icons/github.svg", href: "https://github.com/krsahil8825", label: "GitHub" },
     { icon: "/icons/hashnode.svg", href: "https://hashnode.com/@krsahil8825", label: "Hashnode" },

@@ -1,31 +1,43 @@
-import { SITE } from "./site";
+import { globby } from "globby";
+import path from "node:path";
 
-const IMAGE_PATHS = [
-    "/site/profile.webp",
-    "/site/favicon.png",
-    "/site/favicon.svg",
-    "/site/favicon-192x192.png",
-    "/site/favicon-180x180.png",
-    "/site/favicon-32x32.png",
-    "/site/favicon-16x16.png",
-    "/education/amity-university-patna-logo.png",
-    "/education/bihar-school-examination-board-logo.png",
-    "/education/central-board-of-secondary-education-logo.png",
-    "/education/freecodecamp-logo.png",
-    "/education/harvard-university-logo.png",
-    "/education/iit-kharagpur-logo.png",
-    "/posts/blogs/network-social-media-platform.jpg",
-    "/posts/blogs/portfolio-website.png",
-    "/posts/blogs/url-content-type-detector.jpg",
-    "/posts/projects/network-social-media-platform.jpg",
-    "/posts/projects/portfolio-website.png",
-    "/posts/projects/url-content-type-detector.jpg",
-];
+export async function getPages() {
+    const files = await globby([
+        "src/pages/**/*.{astro,md,mdx,html}",
+        "!src/pages/**/[[]*[]]*.*"
+    ]);
 
-const CORE_PATHS = ["/", "/blogs", "/projects", "/blogs/page/1", "/projects/page/1"];
+    return files.map((file: string) => {
 
-export const SITEMAP_CUSTOM_PAGES = [...CORE_PATHS, ...IMAGE_PATHS].map((path) => `${SITE.url}${path}`);
+        let route = file
+            .replace("src/pages", "")
+            .replace(/\.(astro|md|mdx|html)$/, "")
+            .replace(/\/index$/, "");
 
-export function shouldIncludeInSitemap(page: string): boolean {
-    return !page.includes("/404");
+        if (route === "") route = "/";
+
+        return { url: route };
+
+    });
+}
+
+export async function getStaticImages() {
+
+    const files = await globby([
+        "public/**/*.{png,jpg,jpeg,webp,avif,gif}",
+        "!public/**/*.svg"
+    ]);
+
+    return files.map((file: string) => ({
+
+        url: "/",
+
+        img: [
+            {
+                url: "/" + path.relative("public", file).replace(/\\/g, "/"),
+            },
+        ],
+
+    }));
+
 }
