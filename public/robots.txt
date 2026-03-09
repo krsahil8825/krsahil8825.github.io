@@ -3,7 +3,7 @@ Allow: /
 Disallow: /*?*
 Allow: /*?page=
 
-Host: https://krsahil.co.in
+Host: krsahil.co.in
 
 Sitemap: https://krsahil.co.in/sitemap-index.xml
 Sitemap: https://krsahil.co.in/image-sitemap.xml
