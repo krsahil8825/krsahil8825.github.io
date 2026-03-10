@@ -54,7 +54,7 @@ export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
     const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` : `${SITE.fullName} | ${SITE.role}`;
     const metaDescription = pDescription ? pDescription : SITE.description;
     const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : pPath ? `${SITE.url}/${pPath}` : SITE.url;
-    const metaKeywords = Array.from(new Set([...SITE.keywords, ...pKeywords, ...pTags])).join(", ");
+    const metaKeywords = Array.from(new Set([...SITE.keywords, ...SITE.aliases, ...pKeywords, ...pTags])).join(", ");
     const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
     const metaImageMimeType = inferImageMimeType(metaImage);
     const indexable = isIndexable;
@@ -78,6 +78,13 @@ const baseGraph = [
         "@id": `${SITE.url}#website`,
         url: SITE.url,
         name: SITE.fullName,
+        alternateName: SITE.aliases,
+        keywords: SITE.keywords.join(", "),
+        potentialAction: {
+            "@type": "SearchAction",
+            target: `${SITE.url}/blogs/page/{search_term_string}`,
+            "query-input": "required name=search_term_string",
+        },
         publisher: {
             "@id": `${SITE.url}#person`,
         },
@@ -86,20 +93,12 @@ const baseGraph = [
         "@type": "Person",
         "@id": `${SITE.url}#person`,
         name: "Kumar Sahil",
-        alternateName: [
-            "Sahil",
-            "Sahil Kumar",
-            "Kumar Sahil",
-            "Kr Sahil",
-            "KrSahil",
-            "krsahil8825",
-            "Kumar Sahil Developer",
-            "Sahil Developer",
-        ],
+        alternateName: SITE.aliases,
         url: SITE.url,
         image: `${SITE.url}${SITE.profilePic}`,
         jobTitle: SITE.role,
         description: SITE.description,
+        sameAs: [SITE.social.github.url, SITE.social.linkedin.url, SITE.social.twitter.url, SITE.social.instagram.url],
         knowsAbout: [
             "Python",
             "Java",
@@ -112,7 +111,7 @@ const baseGraph = [
             "Algorithms",
             "Web Development",
         ],
-        sameAs: [SITE.social.github.url, SITE.social.linkedin.url, SITE.social.twitter.url, SITE.social.instagram.url],
+        keywords: SITE.keywords.join(", "),
     },
 ];
 

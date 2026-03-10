@@ -5,7 +5,10 @@ export const SITE = {
     aliases: [
         "Kr Sahil",
         "KrSahil",
+        "krsahil",
         "KumarSahil",
+        "Kumar Sahil Developer",
+        "Kumar Sahil Python Developer",
         "Sahil",
         "krsahil8825"
     ],
@@ -40,11 +43,18 @@ export const SITE = {
     keywords: [
         // Primary name entity
         "Kumar Sahil",
+        "kumar sahil",
         "Kr Sahil",
+        "kr sahil",
+        "krsahil",
         "KumarSahil",
         "Sahil",
         "KrSahil",
-        "KrSahil8825",
+        "krsahil8825",
+        "krsahil portfolio",
+        "kumar sahil portfolio",
+        "krsahil backend developer",
+        "kumar sahil python developer",
 
         // Role-based
         "Backend Developer",
