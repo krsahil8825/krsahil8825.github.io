@@ -82,6 +82,13 @@ export const CERTIFICATIONS: Certification[] = [
         credentialUrl:
             "https://archive.nptel.ac.in/content/noc/NOC25/SEM2/Ecertificates/106/noc25-cs145/Course/NPTEL25CS145S54460032309170168.pdf",
     },
+    {
+        title: "Data Structures and Algorithms",
+        issuer: "Udemy",
+        issued: "March 2026",
+        logo: "/education/udemy-logo.png",
+        credentialUrl: "https://www.udemy.com/certificate/UC-bb535efd-29a0-4947-a553-d01042591421/",
+    },
 ];
 
 export const parseIssuedDate = (issued: string): number => {
