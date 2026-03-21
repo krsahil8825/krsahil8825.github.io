@@ -66,3 +66,14 @@ export const SKILLS: SkillGroup[] = [
         ],
     },
 ];
+
+
+export function getSkillNames(): string[] {
+    return Array.from(
+        new Set(
+            SKILLS.flatMap(group =>
+                group.items.map(item => item.name)
+            )
+        )
+    );
+}
