@@ -27,11 +27,11 @@ export const SITE = {
     },
 
     // Professional Info
-    role: "Python Developer | Backend Developer | Django Developer",
-    tagline: "Building reliable backend systems with Django, Flask, and SQL",
+    role: "Full-Stack Developer | Python Developer | Django Developer | React Developer",
+    tagline: "Building reliable Full-Stack systems with React and Python (Django/Flask)",
 
     shortBio:
-        "I am a backend developer working with Python and Django, focused on building reliable web applications while strengthening my foundations in data structures and system design.",
+        "I am a full-stack developer working with Python, Django, and React, focused on building reliable and scalable web applications. I am also learning core computer science fundamentals and exploring modern technologies to improve my development skills.",
 
     longBio:
         "I am Kumar Sahil, a backend developer and BCA student with a strong interest in Python and Django, and web development. I focus on building practical, real-world applications using frameworks like Django and Flask, while working extensively with SQL, Git, and Docker.\n\nI am currently strengthening my understanding of data structures, algorithms, and core computer science fundamentals to improve my problem-solving skills and write more efficient, maintainable code. I enjoy learning by building projects, contributing to open source, and continuously improving my technical depth.",

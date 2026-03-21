@@ -87,6 +87,7 @@ export const CERTIFICATIONS: Certification[] = [
         issuer: "Udemy",
         issued: "March 2026",
         logo: "/education/udemy-logo.png",
+        credentialId: "UC-bb535efd-29a0-4947-a553-d01042591421",
         credentialUrl: "https://www.udemy.com/certificate/UC-bb535efd-29a0-4947-a553-d01042591421/",
     },
 ];
@@ -173,6 +174,7 @@ export const SKILLS: SkillGroup[] = [
             { name: "CSS", icon: "/icons/css.svg" },
             { name: "Bootstrap", icon: "/icons/bootstrap.svg" },
             { name: "Tailwind CSS", icon: "/icons/tailwindcss.svg" },
+            { name: "React", icon: "/icons/react.svg" },
             { name: "Astro", icon: "/icons/astro.svg" },
             { name: "Jekyll", icon: "/icons/jekyll.svg" },
         ],
