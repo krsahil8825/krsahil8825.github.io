@@ -1,4 +1,4 @@
-import { SITE } from "./site";
+import { SITE_CONFIG } from "../config/site.config.ts";
 
 export interface SEOProps {
     pType?: "article" | "website";
