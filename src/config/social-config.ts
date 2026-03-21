@@ -6,6 +6,11 @@ export interface SocialLink {
 
 export const socialICONS = "/icons/social.svg";
 
+// only for seo components, where username is required instead of full link
+export const USERNAME = {
+    twitter: "krsahil8825",
+}
+
 export const LINKS = {
     discord: "https://discord.com/users/krsahil8825",
     dailyDev: "https://app.daily.dev/krsahil8825",

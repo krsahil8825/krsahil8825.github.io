@@ -7,8 +7,8 @@ import BlogHeader from "../../../features/blogs/PageComponent/BlogHeader.astro";
 import BlogGrid from "../../../features/blogs/PageComponent/BlogGrid.astro";
 import BlogPagination from "../../../features/blogs/PageComponent/BlogPagination.astro";
 
-import { getBlogsListingStaticPaths } from "../../../config/page-paths";
-import { getBlogsListingSEO } from "../../../config/page-seo";
+import { getBlogsListingStaticPaths } from "../../../utils/content-paths";
+import { getBlogsListingSEO } from "../../../utils/page-seo";
 
 // STATIC PATHS
 export async function getStaticPaths() {

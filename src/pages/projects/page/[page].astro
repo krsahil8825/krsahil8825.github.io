@@ -7,8 +7,8 @@ import ProjectHeader from "../../../features/projects/PageComponent/ProjectHeade
 import ProjectsGrid from "../../../features/projects/PageComponent/ProjectsGrid.astro";
 import ProjectsPagination from "../../../features/projects/PageComponent/ProjectsPagination.astro";
 
-import { getProjectsListingStaticPaths } from "../../../config/page-paths";
-import { getProjectsListingSEO } from "../../../config/page-seo";
+import { getProjectsListingStaticPaths } from "../../../utils/content-paths";
+import { getProjectsListingSEO } from "../../../utils/page-seo";
 
 // STATIC PATHS
 export async function getStaticPaths() {

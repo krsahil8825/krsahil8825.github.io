@@ -74,3 +74,9 @@ export const CERTIFICATIONS: Certification[] = [
         credentialUrl: "https://www.udemy.com/certificate/UC-bb535efd-29a0-4947-a553-d01042591421/",
     },
 ];
+
+export const parseIssuedDate = (issued: string): number => {
+    return new Date(`01 ${issued}`).getTime();
+};
+
+export const SORTED_CERTIFICATIONS: Certification[] = [...CERTIFICATIONS].sort((a, b) => parseIssuedDate(b.issued) - parseIssuedDate(a.issued));

@@ -4,11 +4,11 @@ import { globby } from "globby";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { createWriteStream } from "node:fs";
 import { Readable } from "node:stream";
-import { SITE } from "./../src/config/site.ts";
+import { SITE_META } from "./../src/config/site-config.ts";
 
 const ROOT = process.cwd();
 // const SITE_URL = "https://krsahil.co.in";
-const SITE_URL = SITE.url;
+const SITE_URL = SITE_META.url;
 
 const PATHS = {
     output: path.join(ROOT, "public", "image-sitemap.xml"),

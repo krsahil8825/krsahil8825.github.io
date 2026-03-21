@@ -5,18 +5,18 @@ import sitemap from "@astrojs/sitemap";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import { SITE } from "./src/config/site";
-import { SITEMAP_CUSTOM_PAGES, shouldIncludeInSitemap } from "./src/config/sitemap";
+import { SITE_META } from "./src/config/site-config";
+// import { SITEMAP_CUSTOM_PAGES, shouldIncludeInSitemap } from "./src/utils/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-    site: SITE.url,
-    integrations: [
-        sitemap({
-            filter: shouldIncludeInSitemap,
-            customPages: SITEMAP_CUSTOM_PAGES,
-        }),
-    ],
+    site: SITE_META.url,
+    // integrations: [
+    //     sitemap({
+    //         filter: shouldIncludeInSitemap,
+    //         customPages: SITEMAP_CUSTOM_PAGES,
+    //     }),
+    // ],
     vite: {
         plugins: [tailwindcss()],
     },

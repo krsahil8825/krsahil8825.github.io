@@ -1,5 +1,5 @@
 ---
-import { SITE } from "../../config/site";
+import { LINKS } from "../../config/social-config";
 ---
 
 <section id="contact" aria-labelledby="contact-heading" class="relative py-28 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -37,23 +37,17 @@ import { SITE } from "../../config/site";
 
             <!-- Social Links -->
             <div class="flex flex-wrap justify-center gap-6 text-sm">
-                <a href={SITE.social.github.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="GitHub">
-                    GitHub
-                </a>
+                <a href={LINKS.github} class="text-white/70 hover:text-cyan-400 transition" aria-label="GitHub"> GitHub </a>
 
-                <a href={SITE.social.linkedin.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="LinkedIn">
-                    LinkedIn
-                </a>
+                <a href={LINKS.linkedin} class="text-white/70 hover:text-cyan-400 transition" aria-label="LinkedIn"> LinkedIn </a>
 
-                <a href={SITE.social.twitter.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="Twitter">
-                    Twitter
-                </a>
+                <a href={LINKS.twitter} class="text-white/70 hover:text-cyan-400 transition" aria-label="Twitter"> Twitter </a>
 
-                <a href={SITE.social.instagram.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="Instagram">
+                <a href={LINKS.instagram} class="text-white/70 hover:text-cyan-400 transition" aria-label="Instagram">
                     Instagram
                 </a>
 
-                <a href={SITE.social.mail.url} class="text-white/70 hover:text-cyan-400 transition" aria-label="Email"> Email </a>
+                <a href={LINKS.email} class="text-white/70 hover:text-cyan-400 transition" aria-label="Email"> Email </a>
             </div>
         </div>
     </div>

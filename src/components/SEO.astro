@@ -1,6 +1,7 @@
 ---
-import { SITE } from "../config/site";
-import { createStructuredData, resolveSEO, type SEOProps } from "../config/seo";
+import { IDENTITY, SITE_META, BRANDING } from "../config/site-config.ts";
+import { createStructuredData, resolveSEO, type SEOProps } from "../utils/seo.ts";
+import { USERNAME } from "../config/social-config";
 
 const {
     pType = "website", // "article" or "website"
@@ -64,17 +65,17 @@ const structuredData = createStructuredData(
 
     <meta name="description" content={metaDescription} />
 
-    <meta name="author" content={SITE.fullName} />
+    <meta name="author" content={IDENTITY.name} />
     <link rel="canonical" href={metaURL} />
-    <link rel="alternate" hreflang={SITE.locale} href={metaURL} />
+    <link rel="alternate" hreflang={SITE_META.locale} href={metaURL} />
     <link rel="alternate" hreflang="x-default" href={metaURL} />
-    <link rel="sitemap" type="application/xml" href={`${SITE.url}/sitemap-index.xml`} />
+    <link rel="sitemap" type="application/xml" href={`${SITE_META.url}/sitemap-index.xml`} />
     <meta name="keywords" content={metaKeywords} />
-    <meta name="language" content={SITE.locale} />
+    <meta name="language" content={SITE_META.locale} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="application-name" content={SITE.fullName} />
-    <link rel="author" href={SITE.url} />
+    <meta name="application-name" content={IDENTITY.name} />
+    <link rel="author" href={SITE_META.url} />
 
     <!-- INDEXING -->
     {
@@ -96,24 +97,24 @@ const structuredData = createStructuredData(
     {isArticle && pTags?.length ? pTags.map((tag: string) => <meta property="article:tag" content={tag} />) : null}
 
     <!-- ICONS -->
-    <link rel="icon" href={SITE.siteIcons.ico} sizes="any" />
-    <link rel="icon" href={SITE.siteIcons.svg} type="image/svg+xml" />
-    <link rel="icon" href={SITE.siteIcons.png} type="image/png" />
-    <link rel="icon" href={SITE.siteIcons.png32x32} type="image/png" sizes="32x32" />
-    <link rel="icon" href={SITE.siteIcons.png16x16} type="image/png" sizes="16x16" />
-    <link rel="apple-touch-icon" href={SITE.siteIcons.appleTouchIcon} />
-    <link rel="android-chrome-icon" href={SITE.siteIcons.androidChromeIcon} />
+    <link rel="icon" href={BRANDING.icons.favicon} sizes="any" />
+    <link rel="icon" href={BRANDING.icons.svg} type="image/svg+xml" />
+    <link rel="icon" href={BRANDING.icons.png} type="image/png" />
+    <link rel="icon" href={BRANDING.icons.sizes["32x32"]} type="image/png" sizes="32x32" />
+    <link rel="icon" href={BRANDING.icons.sizes["16x16"]} type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href={BRANDING.icons.sizes["180x180"]} />
+    <link rel="android-chrome-icon" href={BRANDING.icons.sizes["192x192"]} />
 
     <!-- THEME -->
-    <meta name="theme-color" content={SITE.themeColor} />
+    <meta name="theme-color" content={BRANDING.themeColor} />
 
     <!-- OPEN GRAPH -->
     <meta property="og:type" content={metaType} />
     <meta property="og:title" content={metaTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={metaURL} />
-    <meta property="og:site_name" content={SITE.fullName} />
-    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={IDENTITY.name} />
+    <meta property="og:locale" content={SITE_META.locale} />
     <meta property="og:image" content={metaImage} />
     <meta property="og:image:secure_url" content={metaImage} />
     <meta property="og:image:type" content={metaImageMimeType} />
@@ -126,8 +127,8 @@ const structuredData = createStructuredData(
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={metaImage} />
     <meta name="twitter:image:alt" content={metaTitle} />
-    <meta name="twitter:site" content={`@${SITE.social.twitter.username}`} />
-    <meta name="twitter:creator" content={`@${SITE.social.twitter.username}`} />
+    <meta name="twitter:site" content={`@${USERNAME.twitter}`} />
+    <meta name="twitter:creator" content={`@${USERNAME.twitter}`} />
 
     <!-- MS BING WEBMASTER TOOLS -->
     <meta name="msvalidate.01" content="610C651DB73EFF7F083B1B670B2BE0F5" />
