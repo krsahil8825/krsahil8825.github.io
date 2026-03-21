@@ -1,5 +1,6 @@
 ---
-import { SITE } from "../config/site";
+import { IDENTITY, PROFESSION } from "../config/site-config";
+import { LINKS } from "../config/social-config";
 ---
 
 <footer class="relative bg-black/70 backdrop-blur-md border-t border-white/10">
@@ -13,15 +14,15 @@ import { SITE } from "../config/site";
         <!-- Brand -->
         <div class="text-center md:text-left space-y-3 max-w-sm">
             <p class="text-lg font-semibold neon-text">
-                {SITE.fullName}
+                {IDENTITY.name}
             </p>
 
             <p class="text-xs text-white/50">
-                {SITE.role}
+                {PROFESSION.title}
             </p>
 
             <p class="text-xs text-white/50">
-                {SITE.tagline}
+                {PROFESSION.tagline}
             </p>
         </div>
 
@@ -31,18 +32,18 @@ import { SITE } from "../config/site";
 
             <!-- social links -->
             <div class="flex flex-wrap justify-center md:justify-end gap-6">
-                <a href={SITE.social.github.url} class="hover:text-cyan-400 transition">GitHub</a>
-                <a href={SITE.social.linkedin.url} class="hover:text-cyan-400 transition">LinkedIn</a>
-                <a href={SITE.social.twitter.url} class="hover:text-cyan-400 transition">Twitter</a>
-                <a href={SITE.social.instagram.url} class="hover:text-cyan-400 transition">Instagram</a>
+                <a href={LINKS.github} class="hover:text-cyan-400 transition">GitHub</a>
+                <a href={LINKS.linkedin} class="hover:text-cyan-400 transition">LinkedIn</a>
+                <a href={LINKS.twitter} class="hover:text-cyan-400 transition">Twitter</a>
+                <a href={LINKS.instagram} class="hover:text-cyan-400 transition">Instagram</a>
             </div>
 
             <!-- divider -->
             <div class="hidden md:block h-px w-24 ml-auto bg-white/10"></div>
 
             <!-- email -->
-            <a href={SITE.social.mail.url} class="inline-block text-xs text-white/50 hover:text-cyan-400 transition">
-                {SITE.social.mail.email}
+            <a href={LINKS.email} class="inline-block text-xs text-white/50 hover:text-cyan-400 transition">
+                {LINKS.email}
             </a>
         </div>
     </div>
@@ -52,7 +53,7 @@ import { SITE } from "../config/site";
         <p>Thank you for visiting</p>
         <p class="mt-1">
             Copyright &copy; {new Date().getFullYear()}
-            {SITE.name} | All rights reserved.
+            {IDENTITY.name} | All rights reserved.
         </p>
     </div>
 </footer>

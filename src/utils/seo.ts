@@ -1,4 +1,6 @@
-import { SITE } from "./site";
+import { IDENTITY, PROFESSION, SEO, SITE_META, BRANDING } from "../config/site-config.ts";
+import { LINKS } from "../config/social-config.ts";
+import { getSkillNames } from "../config/skills-config.ts";
 
 export interface SEOProps {
     pType?: "article" | "website";
@@ -51,11 +53,11 @@ export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
 
     const metaType: "article" | "website" = pType === "article" ? pType : "website";
     const isArticle = metaType === "article";
-    const metaTitle = pTitle ? `${pTitle} | ${SITE.fullName}` : `${SITE.fullName} | ${SITE.role}`;
-    const metaDescription = pDescription ? pDescription : SITE.description;
-    const metaURL = pPath && pSlug ? `${SITE.url}/${pPath}/${pSlug}` : pPath ? `${SITE.url}/${pPath}` : SITE.url;
-    const metaKeywords = Array.from(new Set([...SITE.keywords, ...SITE.aliases, ...pKeywords, ...pTags])).join(", ");
-    const metaImage = pImagePath ? `${SITE.url}${pImagePath}` : `${SITE.url}${SITE.siteIcons.png}`;
+    const metaTitle = pTitle ? `${pTitle} | ${IDENTITY.name}` : `${IDENTITY.name} | ${PROFESSION.title}`;
+    const metaDescription = pDescription ? pDescription : SEO.description;
+    const metaURL = pPath && pSlug ? `${SITE_META.url}/${pPath}/${pSlug}` : pPath ? `${SITE_META.url}/${pPath}` : SITE_META.url;
+    const metaKeywords = Array.from(new Set([...SEO.keywords, ...IDENTITY.aliases, ...pKeywords, ...pTags])).join(", ");
+    const metaImage = pImagePath ? `${SITE_META.url}${pImagePath}` : `${SITE_META.url}${BRANDING.icons.png}`;
     const metaImageMimeType = inferImageMimeType(metaImage);
     const indexable = isIndexable;
 
@@ -75,43 +77,32 @@ export function resolveSEO(props: SEOProps = {}): ResolvedSEO {
 const baseGraph = [
     {
         "@type": "WebSite",
-        "@id": `${SITE.url}#website`,
-        url: SITE.url,
-        name: SITE.fullName,
-        alternateName: SITE.aliases,
-        keywords: SITE.keywords.join(", "),
+        "@id": `${SITE_META.url}#website`,
+        url: SITE_META.url,
+        name: IDENTITY.name,
+        alternateName: IDENTITY.aliases,
+        keywords: SEO.keywords.join(", "),
         potentialAction: {
             "@type": "SearchAction",
-            target: `${SITE.url}/blogs/page/{search_term_string}`,
+            target: `${SITE_META.url}/blogs/page/{search_term_string}`,
             "query-input": "required name=search_term_string",
         },
         publisher: {
-            "@id": `${SITE.url}#person`,
+            "@id": `${SITE_META.url}#person`,
         },
     },
     {
         "@type": "Person",
-        "@id": `${SITE.url}#person`,
+        "@id": `${SITE_META.url}#person`,
         name: "Kumar Sahil",
-        alternateName: SITE.aliases,
-        url: SITE.url,
-        image: `${SITE.url}${SITE.profilePic}`,
-        jobTitle: SITE.role,
-        description: SITE.description,
-        sameAs: [SITE.social.github.url, SITE.social.linkedin.url, SITE.social.twitter.url, SITE.social.instagram.url],
-        knowsAbout: [
-            "Python",
-            "Java",
-            "Django",
-            "Flask",
-            "SQL",
-            "Backend Development",
-            "REST APIs",
-            "Data Structures",
-            "Algorithms",
-            "Web Development",
-        ],
-        keywords: SITE.keywords.join(", "),
+        alternateName: IDENTITY.aliases,
+        url: SITE_META.url,
+        image: `${SITE_META.url}${IDENTITY.profileImage}`,
+        jobTitle: PROFESSION.title,
+        description: SEO.description,
+        sameAs: [LINKS.github, LINKS.linkedin, LINKS.twitter, LINKS.instagram],
+        knowsAbout: getSkillNames(),
+        keywords: SEO.keywords.join(", "),
     },
 ];
 
@@ -139,7 +130,7 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
                         "@type": "ListItem",
                         position: 1,
                         name: "Home",
-                        item: SITE.url,
+                        item: SITE_META.url,
                     },
                     ...pathSegments.map((segment, index) => ({
                         "@type": "ListItem",
@@ -148,7 +139,7 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
                             .split("-")
                             .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
                             .join(" "),
-                        item: `${SITE.url}/${pathSegments.slice(0, index + 1).join("/")}`,
+                        item: `${SITE_META.url}/${pathSegments.slice(0, index + 1).join("/")}`,
                     })),
                 ],
             }
@@ -160,9 +151,9 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
         url: resolved.metaURL,
         name: resolved.metaTitle,
         description: resolved.metaDescription,
-        inLanguage: SITE.locale,
+        inLanguage: SITE_META.locale,
         isPartOf: {
-            "@id": `${SITE.url}#website`,
+            "@id": `${SITE_META.url}#website`,
         },
         primaryImageOfPage: {
             "@id": `${resolved.metaURL}#primaryimage`,
@@ -174,7 +165,7 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
         "@id": `${resolved.metaURL}#primaryimage`,
         url: resolved.metaImage,
         contentUrl: resolved.metaImage,
-        inLanguage: SITE.locale,
+        inLanguage: SITE_META.locale,
         caption: resolved.metaTitle,
     };
 
@@ -195,10 +186,10 @@ export function createStructuredData(props: SEOProps, resolved: ResolvedSEO) {
                 dateModified: pModifiedTime || pPublishedTime,
                 keywords: pTags.join(", "),
                 author: {
-                    "@id": `${SITE.url}#person`,
+                    "@id": `${SITE_META.url}#person`,
                 },
                 publisher: {
-                    "@id": `${SITE.url}#website`,
+                    "@id": `${SITE_META.url}#website`,
                 },
             }
             : null;

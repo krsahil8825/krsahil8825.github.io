@@ -6,9 +6,9 @@ import SEO from "../../components/SEO.astro";
 import BlogArticle from "../../features/blogs/SlugComponent/BlogArticle.astro";
 
 import type { CollectionEntry } from "astro:content";
-import { getAdjacentSlugs } from "../../config/content";
-import { getBlogSlugStaticPaths } from "../../config/page-paths";
-import { getBlogArticleSEO } from "../../config/page-seo";
+import { getAdjacentSlugs } from "../../utils/content-utils";
+import { getBlogSlugStaticPaths } from "../../utils/content-paths";
+import { getBlogArticleSEO } from "../../utils/page-seo";
 
 export async function getStaticPaths() {
     return getBlogSlugStaticPaths();

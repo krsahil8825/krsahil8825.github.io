@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import { buildPaginatedPaths, buildSlugPaths } from "./content";
+import { buildPaginatedPaths, buildSlugPaths } from "./content-utils";
 
 export async function getBlogsListingStaticPaths() {
     const blogs = await getCollection("blogs");

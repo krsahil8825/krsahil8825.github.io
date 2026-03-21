@@ -1,5 +1,5 @@
 ---
-import { SITE } from "../../config/site";
+import { IDENTITY } from "../../config/site-config.ts";
 ---
 
 <section
@@ -29,8 +29,8 @@ import { SITE } from "../../config/site";
                     <div class="absolute inset-0 rounded-full bg-cyan-400/20 blur-3xl scale-110 pointer-events-none"></div>
 
                     <img
-                        src={SITE.profilePic}
-                        alt={`Photo of ${SITE.fullName}`}
+                        src={IDENTITY.profileImage}
+                        alt={`Photo of ${IDENTITY.name}`}
                         width="300"
                         height="300"
                         loading="lazy"
@@ -45,7 +45,7 @@ import { SITE } from "../../config/site";
                 class="space-y-8 max-w-3xl mx-auto lg:mx-0 text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed select-text"
             >
                 <p>
-                    I'm <span class="text-cyan-300 font-medium">{SITE.fullName}</span>, a full-stack developer and BCA student. I
+                    I'm <span class="text-cyan-300 font-medium">{IDENTITY.name}</span>, a full-stack developer and BCA student. I
                     build practical and scalable web applications using
                     <span class="text-cyan-300">Python</span>,
                     <span class="text-cyan-300">Django</span>, and
