@@ -21,6 +21,21 @@ export const IDENTITY = {
     ],
 
     profileImage: "/site/profile.webp",
+
+
+    about: {
+        intro:
+            "I'm a backend-focused full-stack developer and BCA student. I build scalable and reliable web applications using Python and Django, with working knowledge of React for frontend integration.",
+
+        experience:
+            "My experience includes developing RESTful APIs and backend systems using Django and Flask. I work with SQL databases and use tools like Git, GitHub, and Docker to build and manage applications efficiently.",
+
+        currentLearning:
+            "Currently, I am strengthening my backend expertise by learning Django REST Framework and exploring technologies such as Celery and Redis to build asynchronous, scalable, and production-ready systems.",
+
+        philosophy:
+            "I focus on writing clean, maintainable backend code and continuously improving through hands-on projects, structured learning, and a strong foundation in core computer science concepts."
+    }
 } as const;
 
 
@@ -41,31 +56,29 @@ export const BRANDING = {
 } as const;
 
 
-// Professional Info
 export const PROFESSION = {
-    title: "Full-Stack Developer | Python, Django, React",
+    title: "Backend Developer | Python, Django, React",
 
     roles: [
-        "Full-Stack Developer",
-        "Frontend Developer",
         "Backend Developer",
         "Python Developer",
         "Django Developer",
-        "React Developer"
+        "Django REST Framework Developer",
+        "Full-Stack Developer"
     ],
 
     tagline:
-        "Building reliable and scalable full-stack applications using Python, Django, and React.",
+        "Backend-focused developer building scalable APIs and reliable systems using Python and Django.",
 
     bio:
-        "I am a full-stack developer working with Python, Django, and React, focused on building reliable and scalable web applications. I am also learning core computer science fundamentals and exploring modern technologies to continuously improve my development skills.",
+        "I am a backend-focused developer skilled in Python, Django, building scalable APIs and reliable web applications. Familiar with React and currently advancing backend expertise through DRF, Celery, and Redis for scalable, asynchronous systems.",
 } as const;
 
 
 // SEO
 export const SEO = {
     description:
-        "Kumar Sahil is a full-stack developer and BCA student specializing in Python, Django, React and SQL. Explore projects, backend systems, frontend interfaces, and scalable applications built with modern technologies. Discover a portfolio showcasing expertise in web development, API design, and software engineering.",
+        "Kumar Sahil is a backend-focused full-stack developer specializing in Python, Django, and Django REST Framework. With experience in building scalable APIs and reliable web applications, Kumar also has working knowledge of React for frontend integration. Discover a portfolio showcasing expertise in web development, API design, and software engineering.",
 
     keywords: [
         "Kumar Sahil",

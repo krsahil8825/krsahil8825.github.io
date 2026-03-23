@@ -17,6 +17,7 @@ export const SKILLS: SkillGroup[] = [
             { name: "C", icon: "/icons/c.svg" },
             { name: "C++", icon: "/icons/cpp.svg" },
             { name: "JavaScript", icon: "/icons/javascript.svg" },
+            { name: "TypeScript", icon: "/icons/typescript.svg" },
         ],
     },
     {
