@@ -73,6 +73,14 @@ export const CERTIFICATIONS: Certification[] = [
         credentialId: "UC-bb535efd-29a0-4947-a553-d01042591421",
         credentialUrl: "https://www.udemy.com/certificate/UC-bb535efd-29a0-4947-a553-d01042591421/",
     },
+    {
+        title: "CS50's Introduction to Cybersecurity",
+        issuer: "Harvard University",
+        issued: "March 2026",
+        logo: "/education/harvard-university-logo.png",
+        credentialId: "960f9951-0c5e-424e-93c4-42029040776a",
+        credentialUrl: "https://cs50.harvard.edu/certificates/960f9951-0c5e-424e-93c4-42029040776a",
+    },
 ];
 
 export const parseIssuedDate = (issued: string): number => {
