@@ -1,10 +1,10 @@
+import { CONTACT_PUBLIC_API_URL } from "../config/site-config";
+
 type ContactFormElements = {
     form: HTMLFormElement;
     statusMessage: HTMLElement;
     submitButton: HTMLButtonElement;
 };
-
-const FORM_SUBMIT_URL = "http://localhost:8000/submit-form";
 
 function isValidEmail(email: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -46,7 +46,7 @@ export function initContactForm({ form, statusMessage, submitButton }: ContactFo
         setStatus(statusMessage, "Sending message...", "min-h-6 text-sm text-cyan-300");
 
         try {
-            const response = await fetch(FORM_SUBMIT_URL, {
+            const response = await fetch(CONTACT_PUBLIC_API_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

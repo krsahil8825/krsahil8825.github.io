@@ -134,3 +134,4 @@ export const SEO = {
 } as const;
 
 
+export const CONTACT_PUBLIC_API_URL = "https://simple-mail-contact.vercel.app/submit-form" as const;
