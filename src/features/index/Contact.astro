@@ -21,18 +21,60 @@ import { LINKS } from "../../config/social-config";
         <div class="flex flex-col items-center gap-12">
             <!-- Form Card -->
             <div
-                class="w-full max-w-3xl rounded-2xl bg-gray-300 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.08)] overflow-hidden"
+                class="w-full max-w-3xl rounded-2xl border border-white/10 bg-slate-950/70 p-6 sm:p-8 shadow-[0_0_40px_rgba(34,211,238,0.08)] backdrop-blur-md"
             >
-                <!-- Responsive iframe wrapper -->
-                <div class="relative w-full pt-[115%] sm:pt-[90%]">
-                    <iframe
-                        src="https://docs.google.com/forms/d/e/1FAIpQLSckdm39FGYi8PQ0pR61kQAHwgKXw7J3n9FJ9EL_xyJgwQVhjQ/viewform?embedded=true"
-                        class="absolute inset-0 w-full h-full border-0"
-                        loading="lazy"
-                    >
-                        Loading…
-                    </iframe>
-                </div>
+                <form id="contact-form" class="space-y-6" novalidate>
+                    <div class="grid gap-6 sm:grid-cols-2">
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-medium text-white/80">Name</span>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                autocomplete="name"
+                                required
+                                class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                                placeholder="Your name"
+                            />
+                        </label>
+
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-medium text-white/80">Email</span>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                required
+                                class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                                placeholder="you@example.com"
+                            />
+                        </label>
+                    </div>
+
+                    <label class="block">
+                        <span class="mb-2 block text-sm font-medium text-white/80">Message</span>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="6"
+                            required
+                            class="w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                            placeholder="Write your message here"></textarea>
+                    </label>
+
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <button
+                            id="submit-button"
+                            type="submit"
+                            class="inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            Send Message
+                        </button>
+
+                        <p id="form-status" class="min-h-6 text-sm text-white/70" aria-live="polite"></p>
+                    </div>
+                </form>
             </div>
 
             <!-- Social Links -->
@@ -52,3 +94,15 @@ import { LINKS } from "../../config/social-config";
         </div>
     </div>
 </section>
+
+<script>
+    import { initContactForm } from "../../utils/handel-contact-form";
+
+    const form = document.getElementById("contact-form") as HTMLFormElement | null;
+    const statusMessage = document.getElementById("form-status") as HTMLElement | null;
+    const submitButton = document.getElementById("submit-button") as HTMLButtonElement | null;
+
+    if (form && statusMessage && submitButton) {
+        initContactForm({ form, statusMessage, submitButton });
+    }
+</script>
