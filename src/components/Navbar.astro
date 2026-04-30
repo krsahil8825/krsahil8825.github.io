@@ -4,60 +4,110 @@ import { NAV_LINKS } from "../config/navigation-config.ts";
 import SocialDropdown from "./SocialDropdown.astro";
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 overflow-x-clip backdrop-blur-md bg-black/70 border-b border-white/10">
-    <nav class="mx-auto max-w-7xl min-w-0 flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
-        <!-- Brand -->
-        <a
-            href="/"
-            class="max-w-[55vw] sm:max-w-none truncate text-lg font-semibold tracking-tight text-white hover:text-cyan-400 transition"
-        >
-            {IDENTITY.name}
+<header
+    class="fixed inset-x-0 top-0 z-50 overflow-x-clip backdrop-blur-xl bg-linear-to-b from-black/95 via-black/90 to-black/80 border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5"
+>
+    <nav class="mx-auto max-w-7xl min-w-0 flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-20">
+        <!-- Brand with Animation -->
+        <a href="/" class="group flex items-center gap-2 min-w-0 focus:outline-none">
+            <div class="relative">
+                <div
+                    class="absolute -inset-2 bg-linear-to-r from-cyan-500/30 via-transparent to-cyan-500/30 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500 -z-10"
+                >
+                </div>
+                <span
+                    class="block max-w-[45vw] sm:max-w-none truncate text-lg md:text-xl font-bold tracking-tight bg-linear-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent group-hover:from-cyan-400 group-hover:via-white group-hover:to-cyan-300 transition duration-500 whitespace-nowrap animate-gradient"
+                >
+                    {IDENTITY.name}
+                </span>
+            </div>
         </a>
 
         <!-- Desktop Navigation -->
-        <ul class="hidden lg:flex items-center gap-4 xl:gap-8 text-xs xl:text-sm font-medium text-white/80 whitespace-nowrap">
-            {
-                NAV_LINKS.map((link) => (
-                    <li>
-                        <a href={link.href} class="relative transition hover:text-cyan-400">
-                            {link.label}
-                        </a>
-                    </li>
-                ))
-            }
+        <div class="hidden lg:flex items-center gap-6 xl:gap-10">
+            <ul class="flex items-center gap-4 xl:gap-8 text-sm font-medium text-white/80 whitespace-nowrap">
+                {
+                    NAV_LINKS.map((link) => (
+                        <li>
+                            <a
+                                href={link.href}
+                                class="relative px-3 py-2 text-white/70 hover:text-white transition duration-300 group"
+                            >
+                                {link.label}
+                                <span class="absolute bottom-0 left-3 w-0 h-0.5 bg-linear-to-r from-cyan-400 to-cyan-300 group-hover:w-[calc(100%-24px)] transition-all duration-300 rounded-full" />
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
 
             <!-- Social Dropdown -->
-            <li>
+            <div class="flex items-center gap-4">
                 <SocialDropdown variant="desktop" />
-            </li>
-        </ul>
+            </div>
+        </div>
 
-        <!-- Mobile Toggle -->
-        <button
-            id="menu-btn"
-            class="lg:hidden inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-white/80 hover:text-cyan-400 transition"
-            aria-expanded="false"
-        >
-            &#9776;
-        </button>
+        <!-- CTA Button and Mobile Toggle Container -->
+        <div class="flex items-center gap-3 lg:gap-4">
+            <!-- Hire Me Button -->
+            <a
+                href="/#contact"
+                class="hidden sm:inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-lg font-semibold text-sm md:text-base text-white bg-linear-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50 active:scale-95 whitespace-nowrap group"
+            >
+                <span class="relative">Hire Me</span>
+                <span class="text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button
+                id="menu-btn"
+                class="lg:hidden inline-flex items-center justify-center rounded-lg border-2 border-cyan-500/30 hover:border-cyan-400/60 p-2 text-white/70 hover:text-cyan-300 transition-all duration-300 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                aria-expanded="false"
+                aria-label="Toggle menu"
+            >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="menu" class="lg:hidden hidden border-t border-white/10 bg-black/90">
-        <ul class="scrollbar flex max-h-[calc(100vh-4rem)] flex-col overflow-y-auto px-6 py-4 space-y-2 text-sm text-white/90">
+    <div
+        id="menu"
+        class="lg:hidden hidden absolute top-full left-0 right-0 border-t-2 border-cyan-500/20 bg-linear-to-b from-black/95 via-black/90 to-black/80 backdrop-blur-xl shadow-2xl shadow-cyan-500/10 animate-in fade-in slide-in-from-top-2 duration-300"
+    >
+        <ul class="flex max-h-[calc(100vh-5rem)] flex-col overflow-y-auto px-4 sm:px-6 py-4 space-y-2 text-base font-medium">
             {
                 NAV_LINKS.map((link) => (
                     <li>
-                        <a href={link.href} class="block rounded-md px-3 py-2 transition hover:bg-white/5 hover:text-cyan-400">
-                            {link.label}
+                        <a
+                            href={link.href}
+                            class="block rounded-lg px-4 py-3 text-white/80 hover:text-white hover:bg-linear-to-r hover:from-cyan-500/10 hover:to-cyan-400/10 transition-all duration-300 border border-transparent hover:border-cyan-500/30 group relative"
+                        >
+                            <span class="relative z-10 flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 group-hover:opacity-100 transition duration-300" />
+                                {link.label}
+                            </span>
                         </a>
                     </li>
                 ))
             }
 
-            <!-- Social Dropdown (Mobile Part is inside component) -->
-            <li class="relative">
+            <!-- Social Dropdown (Mobile) -->
+            <li class="pt-2 border-t border-white/10 mt-2">
                 <SocialDropdown variant="mobile" />
+            </li>
+
+            <!-- Mobile Hire Me Button -->
+            <li class="pt-2">
+                <a
+                    href="/#contact"
+                    class="flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold text-white bg-linear-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 transition-all duration-300 w-full active:scale-95"
+                >
+                    <span>Hire Me</span>
+                    <span class="text-lg">→</span>
+                </a>
             </li>
         </ul>
     </div>
@@ -67,9 +117,46 @@ import SocialDropdown from "./SocialDropdown.astro";
         const menu = document.getElementById("menu");
 
         btn?.addEventListener("click", () => {
-            const open = !menu?.classList.contains("hidden");
-            menu?.classList.toggle("hidden");
-            btn.setAttribute("aria-expanded", String(!open));
+            const isOpen = !menu?.classList.contains("hidden");
+            if (isOpen) {
+                menu?.classList.add("hidden");
+                btn.setAttribute("aria-expanded", "false");
+            } else {
+                menu?.classList.remove("hidden");
+                btn.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        const menuLinks = menu?.querySelectorAll("a");
+        menuLinks?.forEach((link) => {
+            link.addEventListener("click", () => {
+                menu?.classList.add("hidden");
+                btn?.setAttribute("aria-expanded", "false");
+            });
         });
     </script>
+
+    <style>
+        @keyframes gradient {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-gradient {
+                animation: none;
+            }
+        }
+    </style>
 </header>

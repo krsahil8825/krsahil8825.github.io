@@ -13,32 +13,34 @@ const { variant = "desktop" } = Astro.props as Props;
         <div class="hidden lg:block relative" data-social-dropdown>
             <button
                 type="button"
-                class="social-dropdown-btn flex items-center gap-2 text-white/80 hover:text-cyan-400 transition"
+                class="social-dropdown-btn group flex items-center gap-2 px-3 py-2 text-white/80 hover:text-cyan-300 transition duration-300"
                 aria-expanded="false"
                 aria-haspopup="menu"
             >
-                <img src={socialICONS} alt="Social icon" class="w-4 h-4 border rounded-full bg-white" />
-                Social
-                <span class="text-xs">▼</span>
+                <span class="font-medium text-sm">Social</span>
+                <span class="text-lg transition-transform duration-300 group-aria-expanded:rotate-180">↓</span>
             </button>
 
-            <div class="social-dropdown-menu hidden absolute right-0 mt-3 w-52 bg-black/95 border border-white/10 rounded-lg shadow-lg">
-                <ul class="scrollbar py-2 text-sm text-white/90 max-h-60 overflow-y-auto" role="menu">
+            <div class="social-dropdown-menu hidden absolute right-0 mt-3 w-56 bg-linear-to-b from-black/95 via-black/90 to-black/85 border border-cyan-500/30 rounded-lg shadow-xl shadow-cyan-500/10 backdrop-blur-sm overflow-hidden">
+                <ul class="scrollbar py-2 text-sm text-white/90 max-h-60 overflow-y-auto space-y-1" role="menu">
                     {SOCIAL_LINKS.sort((a, b) => a.label.localeCompare(b.label)).map((social) => (
                         <li>
                             <a
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="flex items-center gap-2 px-4 py-2 hover:bg-white/5 hover:text-cyan-400 transition"
+                                class="flex items-center gap-3 px-4 py-3 hover:bg-cyan-500/10 hover:text-cyan-300 transition-all duration-300 border border-transparent hover:border-cyan-500/30 group/item relative mx-1 rounded-md"
                                 role="menuitem"
                             >
                                 <img
                                     src={social.icon}
                                     alt={`${social.label} icon`}
-                                    class="w-4 h-4 border rounded-full bg-white"
+                                    class="w-4 h-4 border rounded-full bg-white transform group-hover/item:scale-110 transition-transform duration-300"
                                 />
-                                {social.label}
+                                <span>{social.label}</span>
+                                <span class="text-cyan-400 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 ml-auto text-lg">
+                                    →
+                                </span>
                             </a>
                         </li>
                     ))}
@@ -46,18 +48,15 @@ const { variant = "desktop" } = Astro.props as Props;
             </div>
         </div>
     ) : (
-        <div class="lg:hidden" data-social-dropdown>
+        <div class="lg:hidden w-full" data-social-dropdown>
             <button
                 type="button"
-                class="social-dropdown-btn w-full flex items-center justify-between px-3 py-2 text-white/90 hover:bg-white/5 rounded-md"
+                class="social-dropdown-btn group w-full flex items-center justify-between px-4 py-3 text-white/80 hover:text-cyan-300 rounded-lg border border-transparent hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300"
                 aria-expanded="false"
                 aria-haspopup="menu"
             >
-                <span class="flex items-center gap-2">
-                    <img src={socialICONS} alt="Social icon" class="w-4 h-4 border rounded-full bg-white" />
-                    Social
-                </span>
-                <span class="text-xs">▼</span>
+                <span class="font-medium text-sm">Social</span>
+                <span class="text-lg transition-transform duration-300 group-aria-expanded:rotate-180">↓</span>
             </button>
 
             <ul class="social-dropdown-menu scrollbar hidden mt-2 ml-4 space-y-1 max-h-60 overflow-y-auto" role="menu">
@@ -67,11 +66,18 @@ const { variant = "desktop" } = Astro.props as Props;
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/5 hover:text-cyan-400 transition"
+                            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-cyan-500/10 hover:text-cyan-300 transition-all duration-300 border border-transparent hover:border-cyan-500/30 group/item relative"
                             role="menuitem"
                         >
-                            <img src={social.icon} alt={`${social.label} icon`} class="w-4 h-4 border rounded-full bg-white" />
-                            {social.label}
+                            <img
+                                src={social.icon}
+                                alt={`${social.label} icon`}
+                                class="w-4 h-4 border rounded-full bg-white transform group-hover/item:scale-110 transition-transform duration-300"
+                            />
+                            <span>{social.label}</span>
+                            <span class="text-cyan-400 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 ml-auto text-lg">
+                                →
+                            </span>
                         </a>
                     </li>
                 ))}
@@ -90,9 +96,13 @@ const { variant = "desktop" } = Astro.props as Props;
 
                 const button = dropdown.querySelector(".social-dropdown-btn");
                 const menu = dropdown.querySelector(".social-dropdown-menu");
+                const arrow = button?.querySelector("span:last-child");
 
                 menu?.classList.add("hidden");
                 button?.setAttribute("aria-expanded", "false");
+                button?.classList.remove("text-cyan-300", "border-cyan-500/30", "bg-cyan-500/5");
+                button?.classList.add("text-white/80", "border-transparent", "hover:text-cyan-300");
+                arrow?.classList.remove("rotate-180");
             });
         };
 
@@ -101,6 +111,7 @@ const { variant = "desktop" } = Astro.props as Props;
 
             const button = dropdown.querySelector(".social-dropdown-btn");
             const menu = dropdown.querySelector(".social-dropdown-menu");
+            const arrow = button?.querySelector("span:last-child");
 
             if (!button || !menu) return;
 
@@ -111,8 +122,19 @@ const { variant = "desktop" } = Astro.props as Props;
                 const isOpen = !menu.classList.contains("hidden");
 
                 closeAll(dropdown);
-                menu.classList.toggle("hidden", isOpen);
-                button.setAttribute("aria-expanded", String(!isOpen));
+                if (isOpen) {
+                    menu.classList.add("hidden");
+                    button.setAttribute("aria-expanded", "false");
+                    button.classList.remove("text-cyan-300", "border-cyan-500/30", "bg-cyan-500/5");
+                    button.classList.add("text-white/80", "border-transparent", "hover:text-cyan-300");
+                    arrow?.classList.remove("rotate-180");
+                } else {
+                    menu.classList.remove("hidden");
+                    button.setAttribute("aria-expanded", "true");
+                    button.classList.remove("text-white/80", "border-transparent", "hover:text-cyan-300");
+                    button.classList.add("text-cyan-300", "border-cyan-500/30", "bg-cyan-500/5");
+                    arrow?.classList.add("rotate-180");
+                }
             });
         });
 
@@ -125,9 +147,13 @@ const { variant = "desktop" } = Astro.props as Props;
 
                 const button = dropdown.querySelector(".social-dropdown-btn");
                 const menu = dropdown.querySelector(".social-dropdown-menu");
+                const arrow = button?.querySelector("span:last-child");
 
                 menu?.classList.add("hidden");
                 button?.setAttribute("aria-expanded", "false");
+                button?.classList.remove("text-cyan-300", "border-cyan-500/30", "bg-cyan-500/5");
+                button?.classList.add("text-white/80", "border-transparent", "hover:text-cyan-300");
+                arrow?.classList.remove("rotate-180");
             });
         });
 

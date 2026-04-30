@@ -15,7 +15,7 @@ export const LINKS = {
     discord: "https://discord.com/users/krsahil8825",
     dailyDev: "https://app.daily.dev/krsahil8825",
     devTo: "https://dev.to/krsahil8825",
-    email: "mailto:krsahil8825@gmail.com",
+    email: "mailto:contact@krsahil.co.in",
     github: "https://github.com/krsahil8825",
     hashnode: "https://hashnode.com/@krsahil8825",
     instagram: "https://instagram.com/krsahil8825",

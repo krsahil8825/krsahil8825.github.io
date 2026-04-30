@@ -43,7 +43,7 @@ import { LINKS } from "../config/social-config";
 
             <!-- email -->
             <a href={LINKS.email} class="inline-block text-xs text-white/50 hover:text-cyan-400 transition">
-                {LINKS.email}
+                {LINKS.email.replace("mailto:", "")}
             </a>
         </div>
     </div>
